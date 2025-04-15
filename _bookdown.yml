@@ -1,6 +1,12 @@
-book_filename: "index.html"
+book_filename: "series-tiempo"
 output_dir: "docs"
-input:
-  - index.Rmd
-  -  _book/intro.rmd
-  -  _book/references.rmd
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Capítulo "
+
+rmd_files: [
+  "index.Rmd",
+  "01-intro.Rmd",
+  "06-references.Rmd",
+  ]
