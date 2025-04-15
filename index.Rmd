@@ -1,11 +1,8 @@
 ---
-title: "Análisis de Series Temporales"
-author: "Zaira Pizo Gurrute."
-output: bookdown::gitbook
-documentclass: book
+title: "Series de Tiempo"
+author: "Zaira Pizo Gurrute"
+date: "2025-04-14"
 site: bookdown::bookdown_site
+documentclass: book
+output: bookdown::gitbook
 ---
-
-# Introducción
-
-Este libro presenta...
