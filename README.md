@@ -1,3 +1,0 @@
-
-# SeriesTime
-Proyecto 
