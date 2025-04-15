@@ -1,6 +1,7 @@
 book_filename: "series-tiempo"
 output_dir: "docs"
 delete_merged_file: true
+
 language:
   ui:
     chapter_name: "Capítulo "
@@ -8,5 +9,5 @@ language:
 rmd_files: [
   "index.Rmd",
   "01-intro.Rmd",
-  "06-references.Rmd",
-  ]
+  "06-references.Rmd"
+]
