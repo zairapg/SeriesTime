@@ -1,6 +1,10 @@
-book_filename: "bookdown-demo"
-output_dir: "_book"
-language:
-  ui:
-    chapter_name: "Chapter "
-delete_merged_file: true
+book_filename: "index.html"
+output_dir: "docs"
+input:
+  - index.Rmd
+  - _book/intro.rmd
+  - _book/literature.rmd
+  - _book/method.rmd
+  - _book/summary.rmd
+  - _book/references.rmd
+  - _book/application.rmd
