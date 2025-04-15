@@ -1,7 +1,6 @@
 intro
-literature
-methods
-applications
-example-one
-example-two
-final-words
+pronóstico-de-suicidios-en-antioquia-2005-2022
+justificación
+por-qué-aplica-para-pronóstico-en-series-de-tiempo
+valor-agregado-del-pronóstico
+fuente-de-los-datos-y-permisos-de-uso

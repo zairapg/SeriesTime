@@ -1,21 +1,40 @@
 # Introduction {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+# Pronóstico de Suicidios en Antioquia (2005-2022)
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+## Justificación
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
+El presente proyecto tiene como objetivo aplicar técnicas de pronóstico en series de tiempo al conjunto de datos "Cantidad anual de suicidios reportados en el Departamento de Antioquia desde 2005", proporcionado por la Gobernación de Antioquia. Este dataset contiene registros anuales del número de suicidios por municipio, desde el año 2005 hasta 2022, y es actualizado de forma anual. La información incluye variables como nombre del municipio, región, año, población objetivo y número de casos reportados.
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+La elección de esta base de datos responde a la **relevancia social** y **necesidad de planificación en salud pública**. El pronóstico de la cantidad de suicidios puede contribuir a anticipar escenarios de riesgo y generar alertas tempranas, que permitan la asignación estratégica de recursos, la implementación de programas de prevención y el diseño de políticas públicas enfocadas en el bienestar emocional y mental de la población.
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
+## ¿Por qué aplica para pronóstico en series de tiempo?
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+Este conjunto de datos es adecuado para aplicar modelos de pronóstico en series de tiempo porque:
+
+- Presenta una **estructura temporal clara** (datos anuales desde 2005 hasta 2022), lo que permite identificar tendencias, ciclos y posibles patrones de comportamiento.
+- La variable a pronosticar (**Número de Casos**) es continua y medible en el tiempo.
+- La información está organizada por municipio, lo que permite realizar análisis a diferentes niveles de agregación (total departamental, subregional o municipal).
+- Los datos tienen una frecuencia regular (**anual**) y una cobertura suficiente para construir modelos confiables.
+
+## Valor agregado del pronóstico
+
+El desarrollo de modelos de pronóstico con estos datos puede proporcionar un **valor agregado** al permitir:
+
+- Anticipar incrementos en los casos de suicidio a nivel departamental o en municipios específicos.
+- Identificar municipios con tendencia creciente y generar alertas para la intervención oportuna.
+- Apoyar a los tomadores de decisiones del sector salud en la **planificación preventiva**, como el fortalecimiento de redes de apoyo, líneas de atención en crisis, campañas educativas, entre otros.
+
+## Fuente de los datos y permisos de uso
+
+Los datos utilizados en este proyecto son de **fuente pública y oficial**, provienen de:
+
+- **Gobernación de Antioquia – Secretaría Seccional de Salud y Protección Social**
+- Publicados en el portal de datos abiertos con licencia: 
+- Última actualización de datos: **17 de enero de 2024**
+- Frecuencia de actualización: **Anual**
+- Cobertura: **Municipios del Departamento de Antioquia**
+
+Este conjunto de datos cumple con los requisitos legales y éticos para su uso con fines académicos y de análisis.
+
+---
