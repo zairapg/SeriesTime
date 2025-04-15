@@ -6,8 +6,9 @@ language:
   ui:
     chapter_name: "Capítulo "
 
-rmd_files: [
-  "index.Rmd",
-  "01-intro.Rmd",
-  "06-references.Rmd"
-]
+
+chapter_name: "Capítulo "
+rmd_files:
+  - index.Rmd
+  - 01-intro.Rmd
+  - 06-references.Rmd
