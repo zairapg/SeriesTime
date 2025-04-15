@@ -2,7 +2,9 @@
 
 El pronóstico en series de tiempo es una herramienta fundamental en la estadística moderna que permite predecir el comportamiento futuro de una variable con base en sus valores pasados. A lo largo de la historia, la necesidad de anticipar el futuro ha estado presente en múltiples contextos, desde la agricultura y la astronomía, hasta los negocios y la tecnología. Hoy en día, pronosticar con precisión representa una ventaja competitiva clave para las organizaciones, ya que facilita la planificación, la toma de decisiones y la optimización de recursos.
 
+
 En escenarios como la estimación de la demanda energética, la predicción de ventas o la planificación de servicios, los pronósticos permiten anticiparse a los cambios y prepararse ante diferentes situaciones. Sin embargo, no todos los eventos son igual de predecibles; factores como la disponibilidad de datos, la comprensión del sistema y la estabilidad del entorno influyen en la calidad del pronóstico.
+
 
 Este capítulo explora los fundamentos del pronóstico en series de tiempo, sus aplicaciones, diferencias con conceptos como metas y planificación, y los pasos esenciales para construir modelos efectivos. A través del uso de métodos estadísticos y computacionales, se busca identificar patrones relevantes en los datos históricos que puedan ser utilizados para generar predicciones útiles, realistas y validadas.
 
