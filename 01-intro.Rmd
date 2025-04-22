@@ -43,6 +43,13 @@ Los datos utilizados en este proyecto son de **fuente pública y oficial**, prov
 - Frecuencia de actualización: **Anual**
 - Cobertura: **Municipios del Departamento de Antioquia**
 
+Link de la base de datos
+
+https://www.datos.gov.co/Salud-y-Protecci-n-Social/Cantidad-anual-de-suicidios-reportados-en-el-Depar/db67-sbus/about_data
+
+
+
+
 Este conjunto de datos cumple con los requisitos legales y éticos para su uso con fines académicos y de análisis.
 
 ---
