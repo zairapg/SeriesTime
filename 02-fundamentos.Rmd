@@ -1,0 +1,100 @@
+---
+title: "02-fundamentos"
+author: "Zaira Pisso"
+date: "2025-05-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Instalar el paquete si no lo tienes
+
+
+# Cargar el paquete
+library(jsonlite)
+library(paqueteMODELOS)
+library(naniar)
+library(mice)
+library(xtable)
+library(kableExtra)
+library(corrplot)
+library(openxlsx)
+library(dplyr)
+library(factoextra)
+library(ca)
+library(FactoMineR)
+library(leaflet)
+library(plotly)
+library(ggplot2)
+library(dplyr)
+library(lmtest)
+library(gridExtra)
+library(DiagrammeR)
+library(caret)
+library(pROC)
+
+
+# URL del JSON con la consulta
+url <- "https://www.datos.gov.co/resource/db67-sbus.json?$query=SELECT%0A%20%20%60nombremunicipio%60%2C%0A%20%20%60codigomunicipio%60%2C%0A%20%20%60ubicacion%60%2C%0A%20%20%60nombreregion%60%2C%0A%20%20%60codigoregion%60%2C%0A%20%20%60anio%60%2C%0A%20%20%60causamortalidad%60%2C%0A%20%20%60tipopoblacionobjetivo%60%2C%0A%20%20%60numeropoblacionobjetivo%60%2C%0A%20%20%60numerocasos%60"
+
+# Leer los datos desde la URL
+datos <- fromJSON(url)
+
+# Ver los primeros registros
+head(datos)
+
+```
+
+
+**Variables de la base de datos**
+
+```{r warning=FALSE}
+colnames(datos)
+```
+
+**3 primeros Registros de la base de datos** 
+
+```{r warning=TRUE}
+head(datos,3)
+```
+**número total de registros**
+
+```{r warning= FALSE}
+nrow(datos)
+```
+
+
+### EXPLORACION DE LOS DATOS
+
+Se inicia con la exploracion del Dataset, asi como con el resumen estadistico
+
+**Estructura del dataset**
+
+```{r warning=FALSE}
+# 
+kable(head(datos), format = "markdown")
+
+```
+
+**Estadísticas descriptivas**
+
+```{r warning=TRUE}
+summary(datos)
+```
+
+**Se realiza la verificación de valores nulos por cada una de las variables que conforman la data.**
+
+```{r warning=FALSE}
+# Verificar valores nulos
+sum(is.na(datos))
+
+# Verificar la cantidad de valores nulos por columna
+colSums(is.na(datos))
+
+grafico_faltantes <-md.pattern(datos, rotate.names = TRUE)
+
+```

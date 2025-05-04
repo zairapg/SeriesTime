@@ -49,7 +49,10 @@ https://www.datos.gov.co/Salud-y-Protecci-n-Social/Cantidad-anual-de-suicidios-r
 
 
 
-
-Este conjunto de datos cumple con los requisitos legales y éticos para su uso con fines académicos y de análisis.
+Este conjunto de datos cumple con los requisitos legales y éticos para su uso con fines académicos y de análisis..
 
 ---
+```{r}
+
+```
+
