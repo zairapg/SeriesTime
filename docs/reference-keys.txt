@@ -4,6 +4,5 @@ justificación
 por-qué-aplica-para-pronóstico-en-series-de-tiempo
 valor-agregado-del-pronóstico
 fuente-de-los-datos-y-permisos-de-uso
-r-markdown
-including-plots
+fundamentos
 exploracion-de-los-datos

@@ -1,9 +1,4 @@
----
-title: "02-fundamentos"
-author: "Zaira Pisso"
-date: "2025-05-03"
-output: html_document
----
+# Fundamentos {#fundamentos}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
