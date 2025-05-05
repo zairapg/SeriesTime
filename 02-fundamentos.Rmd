@@ -48,9 +48,17 @@ library(readxl)
 # Convertir el contenido JSON a un dataframe y almacenarlo en 'datos'
 #datos <- fromJSON(content(response, "text", encoding = "UTF-8"))
 
+<<<<<<< HEAD
 
 datos <- read_excel("data/datos.xlsx")
 
+=======
+<<<<<<< HEAD
+datos <- read_excel("data/datos.xlsx")
+=======
+datos <- read_excel("D:/datos.xlsx")
+>>>>>>> de36452daed6e002e1ed8f9e131ce76e850033cc
+>>>>>>> 34492ca717b2ace86602115abef3bb2f523610f2
 
 # Verificar los primeros registros
 head(datos)
