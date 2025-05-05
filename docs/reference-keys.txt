@@ -5,3 +5,7 @@ valor-agregado-del-pronóstico
 fuente-de-los-datos-y-permisos-de-uso
 fundamentos
 exploracion-de-los-datos
+promedio-móvil
+rezagos-y-autocorrelación
+estacionariedad-y-diferenciación
+transformación-box-cox

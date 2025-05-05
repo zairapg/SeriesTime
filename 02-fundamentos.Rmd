@@ -115,15 +115,6 @@ df <- datos %>%
     tasa_suicidios = numerocasos / numeropoblacionobjetivo * 1000
   )
 
-unique(df$numerocasos)
-unique(df$numeropoblacionobjetivo)
-
-# Eliminar puntos (separadores de miles), reemplazar comas decimales si fuera el caso
-df <- df %>%
-  mutate(
-    numerocasos = as.numeric(gsub("\\.", "", numerocasos)),
-    numeropoblacionobjetivo = as.numeric(gsub("\\.", "", numeropoblacionobjetivo))
-  )
 
 df <- df %>%
   mutate(tasa_suicidios = numerocasos / numeropoblacionobjetivo * 100000)
@@ -146,7 +137,10 @@ ggplot(suicidios_anuales, aes(x = anio, y = total_suicidios)) +
   geom_point(color = "darkred") +
   labs(title = "Número anual de suicidios en Antioquia",
        x = "Año", y = "Total de suicidios")
+```
 
+## Promedio Móvil
+```{r warning=FALSE}
 #Promedio móvil
 suicidios_anuales <- suicidios_anuales %>%
   mutate(promedio_movil = zoo::rollmean(total_suicidios, k = 3, fill = NA))
@@ -156,11 +150,10 @@ ggplot(suicidios_anuales, aes(x = anio)) +
   geom_line(aes(y = promedio_movil), color = "blue") +
   labs(title = "Promedio móvil de suicidios (k = 3)",
        y = "Número de suicidios")
+```
 
-
-#Rezagos y autocorrelación
-
-
+## Rezagos y autocorrelación
+```{r warning=FALSE}
 ts_suicidios <- ts(suicidios_anuales$total_suicidios, start = min(suicidios_anuales$anio), frequency = 1)
 
 # Autocorrelación
@@ -170,9 +163,10 @@ forecast::ggAcf(ts_suicidios) + ggtitle("Función de Autocorrelación (ACF)")
 # Si tuvieras frecuencia mensual: frequency = 12
 #decomposicion <- decompose(ts_suicidios, type = "additive")
 #plot(decomposicion)
+```
 
-#Estacionariedad y diferenciación
-
+## Estacionariedad y diferenciación
+```{r warning=FALSE}
 adf.test(ts_suicidios)  # Prueba de Dickey-Fuller aumentada
 
 # Si no es estacionaria, aplicar diferenciación
@@ -180,8 +174,11 @@ ts_diff <- diff(ts_suicidios)
 
 plot(ts_diff, main = "Serie diferenciada", ylab = "Diferencia de suicidios")
 adf.test(ts_diff)  # Verificar estacionariedad después
+```
 
-#Transformación Box-Cox (si es necesario)
+## Transformación Box-Cox 
+```{r warning=FALSE}
+
 
 lambda <- BoxCox.lambda(ts_suicidios)
 ts_boxcox <- BoxCox(ts_suicidios, lambda)
