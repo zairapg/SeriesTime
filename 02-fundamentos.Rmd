@@ -36,6 +36,7 @@ library(forecast) # Para descomposición
 library(httr)
 library(jsonlite)
 library(readxl)
+library(tseries)
 
 
 
@@ -104,7 +105,8 @@ grafico_faltantes <-md.pattern(datos, rotate.names = TRUE)
 ```
 
 
-```{r}
+```{r warning=FALSE}
+#Construcción de la serie temporal
 
 df <- datos %>%
   mutate(
@@ -135,28 +137,55 @@ serie_anual <- df %>%
 # Verificar la serie
 print(serie_anual)
 
-datos_agregados <- datos %>%
+suicidios_anuales <- datos %>%
   group_by(anio) %>%
-  summarise(casos = sum(numerocasos))
+  summarise(total_suicidios = sum(numerocasos, na.rm = TRUE))
 
-ggplot(datos_agregados, aes(x = anio, y = casos)) +
+ggplot(suicidios_anuales, aes(x = anio, y = total_suicidios)) +
   geom_line(color = "steelblue") +
-  geom_point() +
-  labs(title = "Casos de suicidio por año en Antioquia (2005–2022)",
-       x = "Año", y = "Número de casos") +
-  theme_minimal()
+  geom_point(color = "darkred") +
+  labs(title = "Número anual de suicidios en Antioquia",
+       x = "Año", y = "Total de suicidios")
+
+#Promedio móvil
+suicidios_anuales <- suicidios_anuales %>%
+  mutate(promedio_movil = zoo::rollmean(total_suicidios, k = 3, fill = NA))
+
+ggplot(suicidios_anuales, aes(x = anio)) +
+  geom_line(aes(y = total_suicidios), color = "gray") +
+  geom_line(aes(y = promedio_movil), color = "blue") +
+  labs(title = "Promedio móvil de suicidios (k = 3)",
+       y = "Número de suicidios")
 
 
-datos_agregados$movil_3 <- rollmean(datos_agregados$casos, k = 2, fill = NA)
-
-ggplot(datos_agregados, aes(x = anio)) +
-  geom_line(aes(y = casos), color = "grey") +
-  geom_line(aes(y = movil_3), color = "red") +
-  labs(title = "Promedio móvil de 3 años", y = "Casos")
+#Rezagos y autocorrelación
 
 
-ts_suicidios <- ts(datos_agregados$casos, start = 2005, frequency = 1)
+ts_suicidios <- ts(suicidios_anuales$total_suicidios, start = min(suicidios_anuales$anio), frequency = 1)
 
-acf(ts_suicidios, main = "Función de autocorrelación (ACF)")
+# Autocorrelación
+forecast::ggAcf(ts_suicidios) + ggtitle("Función de Autocorrelación (ACF)")
+
+# Descomposición
+# Si tuvieras frecuencia mensual: frequency = 12
+#decomposicion <- decompose(ts_suicidios, type = "additive")
+#plot(decomposicion)
+
+#Estacionariedad y diferenciación
+
+adf.test(ts_suicidios)  # Prueba de Dickey-Fuller aumentada
+
+# Si no es estacionaria, aplicar diferenciación
+ts_diff <- diff(ts_suicidios)
+
+plot(ts_diff, main = "Serie diferenciada", ylab = "Diferencia de suicidios")
+adf.test(ts_diff)  # Verificar estacionariedad después
+
+#Transformación Box-Cox (si es necesario)
+
+lambda <- BoxCox.lambda(ts_suicidios)
+ts_boxcox <- BoxCox(ts_suicidios, lambda)
+
+autoplot(ts_boxcox) + ggtitle("Serie transformada con Box-Cox")
 
 ```

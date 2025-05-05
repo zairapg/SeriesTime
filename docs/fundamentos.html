@@ -324,14 +324,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  \  \|/  /
 ##   `-----&#39;</code></pre>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="fundamentos.html#cb14-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="fundamentos.html#cb14-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-3"><a href="fundamentos.html#cb14-3" tabindex="-1"></a>    <span class="at">numerocasos =</span> <span class="fu">as.numeric</span>(numerocasos),</span>
-<span id="cb14-4"><a href="fundamentos.html#cb14-4" tabindex="-1"></a>    <span class="at">numeropoblacionobjetivo =</span> <span class="fu">as.numeric</span>(numeropoblacionobjetivo),</span>
-<span id="cb14-5"><a href="fundamentos.html#cb14-5" tabindex="-1"></a>    <span class="at">tasa_suicidios =</span> numerocasos <span class="sc">/</span> numeropoblacionobjetivo <span class="sc">*</span> <span class="dv">1000</span></span>
-<span id="cb14-6"><a href="fundamentos.html#cb14-6" tabindex="-1"></a>  )</span>
-<span id="cb14-7"><a href="fundamentos.html#cb14-7" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="fundamentos.html#cb14-8" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>numerocasos)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="fundamentos.html#cb14-1" tabindex="-1"></a><span class="co">#Construcción de la serie temporal</span></span>
+<span id="cb14-2"><a href="fundamentos.html#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="fundamentos.html#cb14-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="fundamentos.html#cb14-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-5"><a href="fundamentos.html#cb14-5" tabindex="-1"></a>    <span class="at">numerocasos =</span> <span class="fu">as.numeric</span>(numerocasos),</span>
+<span id="cb14-6"><a href="fundamentos.html#cb14-6" tabindex="-1"></a>    <span class="at">numeropoblacionobjetivo =</span> <span class="fu">as.numeric</span>(numeropoblacionobjetivo),</span>
+<span id="cb14-7"><a href="fundamentos.html#cb14-7" tabindex="-1"></a>    <span class="at">tasa_suicidios =</span> numerocasos <span class="sc">/</span> numeropoblacionobjetivo <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb14-8"><a href="fundamentos.html#cb14-8" tabindex="-1"></a>  )</span>
+<span id="cb14-9"><a href="fundamentos.html#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="fundamentos.html#cb14-10" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>numerocasos)</span></code></pre></div>
 <pre><code>##  [1]   2   0   6   5   1  19   4  17   9 131   3   8  13  10 126 107   7  18  11
 ## [20] 124  20  12 125  16  15 123  14 122  27 128  23 114  22 157  26 164  25 185
 ## [39]  34 210  28 196 212  42 227</code></pre>
@@ -618,30 +620,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 16  2020         11.6 
 ## 17  2021         18.6 
 ## 18  2022         14.7</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="fundamentos.html#cb20-1" tabindex="-1"></a>datos_agregados <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="fundamentos.html#cb20-1" tabindex="-1"></a>suicidios_anuales <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
 <span id="cb20-2"><a href="fundamentos.html#cb20-2" tabindex="-1"></a>  <span class="fu">group_by</span>(anio) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="fundamentos.html#cb20-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">casos =</span> <span class="fu">sum</span>(numerocasos))</span>
+<span id="cb20-3"><a href="fundamentos.html#cb20-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_suicidios =</span> <span class="fu">sum</span>(numerocasos, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb20-4"><a href="fundamentos.html#cb20-4" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="fundamentos.html#cb20-5" tabindex="-1"></a><span class="fu">ggplot</span>(datos_agregados, <span class="fu">aes</span>(<span class="at">x =</span> anio, <span class="at">y =</span> casos)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="fundamentos.html#cb20-5" tabindex="-1"></a><span class="fu">ggplot</span>(suicidios_anuales, <span class="fu">aes</span>(<span class="at">x =</span> anio, <span class="at">y =</span> total_suicidios)) <span class="sc">+</span></span>
 <span id="cb20-6"><a href="fundamentos.html#cb20-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb20-7"><a href="fundamentos.html#cb20-7" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb20-8"><a href="fundamentos.html#cb20-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Casos de suicidio por año en Antioquia (2005–2022)&quot;</span>,</span>
-<span id="cb20-9"><a href="fundamentos.html#cb20-9" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de casos&quot;</span>) <span class="sc">+</span></span>
-<span id="cb20-10"><a href="fundamentos.html#cb20-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<span id="cb20-7"><a href="fundamentos.html#cb20-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="fundamentos.html#cb20-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Número anual de suicidios en Antioquia&quot;</span>,</span>
+<span id="cb20-9"><a href="fundamentos.html#cb20-9" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total de suicidios&quot;</span>)</span></code></pre></div>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="fundamentos.html#cb21-1" tabindex="-1"></a>datos_agregados<span class="sc">$</span>movil_3 <span class="ot">&lt;-</span> <span class="fu">rollmean</span>(datos_agregados<span class="sc">$</span>casos, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="cn">NA</span>)</span>
-<span id="cb21-2"><a href="fundamentos.html#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="fundamentos.html#cb21-3" tabindex="-1"></a><span class="fu">ggplot</span>(datos_agregados, <span class="fu">aes</span>(<span class="at">x =</span> anio)) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="fundamentos.html#cb21-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> casos), <span class="at">color =</span> <span class="st">&quot;grey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="fundamentos.html#cb21-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> movil_3), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="fundamentos.html#cb21-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Promedio móvil de 3 años&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Casos&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range
-## (`geom_line()`).</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="fundamentos.html#cb21-1" tabindex="-1"></a><span class="co">#Promedio móvil</span></span>
+<span id="cb21-2"><a href="fundamentos.html#cb21-2" tabindex="-1"></a>suicidios_anuales <span class="ot">&lt;-</span> suicidios_anuales <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="fundamentos.html#cb21-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">promedio_movil =</span> zoo<span class="sc">::</span><span class="fu">rollmean</span>(total_suicidios, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">fill =</span> <span class="cn">NA</span>))</span>
+<span id="cb21-4"><a href="fundamentos.html#cb21-4" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="fundamentos.html#cb21-5" tabindex="-1"></a><span class="fu">ggplot</span>(suicidios_anuales, <span class="fu">aes</span>(<span class="at">x =</span> anio)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="fundamentos.html#cb21-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> total_suicidios), <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="fundamentos.html#cb21-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> promedio_movil), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="fundamentos.html#cb21-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Promedio móvil de suicidios (k = 3)&quot;</span>,</span>
+<span id="cb21-9"><a href="fundamentos.html#cb21-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Número de suicidios&quot;</span>)</span></code></pre></div>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="fundamentos.html#cb23-1" tabindex="-1"></a>ts_suicidios <span class="ot">&lt;-</span> <span class="fu">ts</span>(datos_agregados<span class="sc">$</span>casos, <span class="at">start =</span> <span class="dv">2005</span>, <span class="at">frequency =</span> <span class="dv">1</span>)</span>
-<span id="cb23-2"><a href="fundamentos.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="fundamentos.html#cb23-3" tabindex="-1"></a><span class="fu">acf</span>(ts_suicidios, <span class="at">main =</span> <span class="st">&quot;Función de autocorrelación (ACF)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="fundamentos.html#cb22-1" tabindex="-1"></a><span class="co">#Rezagos y autocorrelación</span></span>
+<span id="cb22-2"><a href="fundamentos.html#cb22-2" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="fundamentos.html#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="fundamentos.html#cb22-4" tabindex="-1"></a>ts_suicidios <span class="ot">&lt;-</span> <span class="fu">ts</span>(suicidios_anuales<span class="sc">$</span>total_suicidios, <span class="at">start =</span> <span class="fu">min</span>(suicidios_anuales<span class="sc">$</span>anio), <span class="at">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb22-5"><a href="fundamentos.html#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="fundamentos.html#cb22-6" tabindex="-1"></a><span class="co"># Autocorrelación</span></span>
+<span id="cb22-7"><a href="fundamentos.html#cb22-7" tabindex="-1"></a>forecast<span class="sc">::</span><span class="fu">ggAcf</span>(ts_suicidios) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Función de Autocorrelación (ACF)&quot;</span>)</span></code></pre></div>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="fundamentos.html#cb23-1" tabindex="-1"></a><span class="co"># Descomposición</span></span>
+<span id="cb23-2"><a href="fundamentos.html#cb23-2" tabindex="-1"></a><span class="co"># Si tuvieras frecuencia mensual: frequency = 12</span></span>
+<span id="cb23-3"><a href="fundamentos.html#cb23-3" tabindex="-1"></a><span class="co">#decomposicion &lt;- decompose(ts_suicidios, type = &quot;additive&quot;)</span></span>
+<span id="cb23-4"><a href="fundamentos.html#cb23-4" tabindex="-1"></a><span class="co">#plot(decomposicion)</span></span>
+<span id="cb23-5"><a href="fundamentos.html#cb23-5" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="fundamentos.html#cb23-6" tabindex="-1"></a><span class="co">#Estacionariedad y diferenciación</span></span>
+<span id="cb23-7"><a href="fundamentos.html#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="fundamentos.html#cb23-8" tabindex="-1"></a><span class="fu">adf.test</span>(ts_suicidios)  <span class="co"># Prueba de Dickey-Fuller aumentada</span></span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  ts_suicidios
+## Dickey-Fuller = -0.41096, Lag order = 2, p-value = 0.9788
+## alternative hypothesis: stationary</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="fundamentos.html#cb25-1" tabindex="-1"></a><span class="co"># Si no es estacionaria, aplicar diferenciación</span></span>
+<span id="cb25-2"><a href="fundamentos.html#cb25-2" tabindex="-1"></a>ts_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_suicidios)</span>
+<span id="cb25-3"><a href="fundamentos.html#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="fundamentos.html#cb25-4" tabindex="-1"></a><span class="fu">plot</span>(ts_diff, <span class="at">main =</span> <span class="st">&quot;Serie diferenciada&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Diferencia de suicidios&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="fundamentos.html#cb26-1" tabindex="-1"></a><span class="fu">adf.test</span>(ts_diff)  <span class="co"># Verificar estacionariedad después</span></span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  ts_diff
+## Dickey-Fuller = -2.2107, Lag order = 2, p-value = 0.4921
+## alternative hypothesis: stationary</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="fundamentos.html#cb28-1" tabindex="-1"></a><span class="co">#Transformación Box-Cox (si es necesario)</span></span>
+<span id="cb28-2"><a href="fundamentos.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="fundamentos.html#cb28-3" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">BoxCox.lambda</span>(ts_suicidios)</span>
+<span id="cb28-4"><a href="fundamentos.html#cb28-4" tabindex="-1"></a>ts_boxcox <span class="ot">&lt;-</span> <span class="fu">BoxCox</span>(ts_suicidios, lambda)</span>
+<span id="cb28-5"><a href="fundamentos.html#cb28-5" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="fundamentos.html#cb28-6" tabindex="-1"></a><span class="fu">autoplot</span>(ts_boxcox) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Serie transformada con Box-Cox&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
 
 </div>
 </div>
