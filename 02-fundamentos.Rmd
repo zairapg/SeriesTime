@@ -1,7 +1,7 @@
 # Fundamentos Descriptivos {#fundamentos}
 
 
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 # Instalar el paquete si no lo tienes
 
 
@@ -27,34 +27,37 @@ library(gridExtra)
 library(DiagrammeR)
 library(caret)
 library(pROC)
+library(tidyverse)
+library(zoo)      # Para promedios móviles
+library(lubridate)
+library(ggplot2)
+library(tsibble)  # Para manejo de series de tiempo
+library(forecast) # Para descomposición
+library(httr)
+library(jsonlite)
+library(readxl)
 
 
-# URL del JSON con la consulta
-url <- "https://www.datos.gov.co/resource/db67-sbus.json?$query=SELECT%0A%20%20%60nombremunicipio%60%2C%0A%20%20%60codigomunicipio%60%2C%0A%20%20%60ubicacion%60%2C%0A%20%20%60nombreregion%60%2C%0A%20%20%60codigoregion%60%2C%0A%20%20%60anio%60%2C%0A%20%20%60causamortalidad%60%2C%0A%20%20%60tipopoblacionobjetivo%60%2C%0A%20%20%60numeropoblacionobjetivo%60%2C%0A%20%20%60numerocasos%60"
 
-# Leer los datos desde la URL
-datos <- fromJSON(url)
-
-# Ver los primeros registros
-head(datos)
+datos <- read_excel("D:/datos.xlsx")
 
 ```
 
 
 **Variables de la base de datos**
 
-```{r, include=FALSE}
+```{r warning=FALSE}
 colnames(datos)
 ```
 
 **3 primeros Registros de la base de datos** 
 
-```{r, include=FALSE}
+```{r warning=FALSE}
 head(datos,3)
 ```
 **número total de registros**
 
-```{r, include=FALSE}
+```{r warning=FALSE}
 nrow(datos)
 ```
 
@@ -71,11 +74,6 @@ kable(head(datos), format = "markdown")
 
 ```
 
-**Estadísticas descriptivas**
-
-```{r warning=TRUE}
-summary(datos)
-```
 
 **Se realiza la verificación de valores nulos por cada una de las variables que conforman la data.**
 
@@ -87,5 +85,40 @@ sum(is.na(datos))
 colSums(is.na(datos))
 
 grafico_faltantes <-md.pattern(datos, rotate.names = TRUE)
+
+```
+
+
+```{r}
+
+df <- datos %>%
+  mutate(
+    numerocasos = as.numeric(numerocasos),
+    numeropoblacionobjetivo = as.numeric(numeropoblacionobjetivo),
+    tasa_suicidios = numerocasos / numeropoblacionobjetivo * 1000
+  )
+
+unique(df$numerocasos)
+unique(df$numeropoblacionobjetivo)
+
+# Eliminar puntos (separadores de miles), reemplazar comas decimales si fuera el caso
+df <- df %>%
+  mutate(
+    numerocasos = as.numeric(gsub("\\.", "", numerocasos)),
+    numeropoblacionobjetivo = as.numeric(gsub("\\.", "", numeropoblacionobjetivo))
+  )
+
+df <- df %>%
+  mutate(tasa_suicidios = numerocasos / numeropoblacionobjetivo * 100000)
+
+
+# Agrupar por año
+serie_anual <- df %>%
+  group_by(anio) %>%
+  summarise(tasa_promedio = mean(tasa_suicidios, na.rm = TRUE))
+
+# Verificar la serie
+print(serie_anual)
+
 
 ```
