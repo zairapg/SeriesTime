@@ -1,11 +1,7 @@
-# Fundamentos {#fundamentos}
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Fundamentos Descriptivos {#fundamentos}
 
 
-```{r}
+```{r, include=FALSE}
 # Instalar el paquete si no lo tienes
 
 
@@ -47,18 +43,18 @@ head(datos)
 
 **Variables de la base de datos**
 
-```{r warning=FALSE}
+```{r, include=FALSE}
 colnames(datos)
 ```
 
 **3 primeros Registros de la base de datos** 
 
-```{r warning=TRUE}
+```{r, include=FALSE}
 head(datos,3)
 ```
 **número total de registros**
 
-```{r warning= FALSE}
+```{r, include=FALSE}
 nrow(datos)
 ```
 
