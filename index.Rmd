@@ -1,6 +1,6 @@
 ---
 title: "Series de Tiempo"
-author: "Zaira Pizo Gurrute"
+author: "Zaira Idaly Pizo Gurrute"
 date: "2025-04-14"
 site: bookdown::bookdown_site
 documentclass: book
