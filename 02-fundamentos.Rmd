@@ -39,7 +39,17 @@ library(readxl)
 
 
 
-datos <- read_excel("D:/datos.xlsx")
+# URL del archivo JSON
+url <- "https://www.datos.gov.co/resource/db67-sbus.json"
+
+# Solicitar el contenido del JSON
+response <- GET(url)
+
+# Convertir el contenido JSON a un dataframe y almacenarlo en 'datos'
+datos <- fromJSON(content(response, "text", encoding = "UTF-8"))
+
+# Verificar los primeros registros
+head(datos)
 
 ```
 
