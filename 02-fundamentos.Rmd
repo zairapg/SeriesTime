@@ -51,7 +51,6 @@ library(readxl)
 
 datos <- read_excel("data/datos.xlsx")
 
-
 # Verificar los primeros registros
 head(datos)
 
@@ -134,5 +133,28 @@ serie_anual <- df %>%
 # Verificar la serie
 print(serie_anual)
 
+datos_agregados <- datos %>%
+  group_by(anio) %>%
+  summarise(casos = sum(numerocasos))
+
+ggplot(datos_agregados, aes(x = anio, y = casos)) +
+  geom_line(color = "steelblue") +
+  geom_point() +
+  labs(title = "Casos de suicidio por año en Antioquia (2005–2022)",
+       x = "Año", y = "Número de casos") +
+  theme_minimal()
+
+
+datos_agregados$movil_3 <- rollmean(datos_agregados$casos, k = 2, fill = NA)
+
+ggplot(datos_agregados, aes(x = anio)) +
+  geom_line(aes(y = casos), color = "grey") +
+  geom_line(aes(y = movil_3), color = "red") +
+  labs(title = "Promedio móvil de 3 años", y = "Casos")
+
+
+ts_suicidios <- ts(datos_agregados$casos, start = 2005, frequency = 1)
+
+acf(ts_suicidios, main = "Función de autocorrelación (ACF)")
 
 ```

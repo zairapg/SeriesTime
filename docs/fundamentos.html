@@ -618,6 +618,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 16  2020         11.6 
 ## 17  2021         18.6 
 ## 18  2022         14.7</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="fundamentos.html#cb20-1" tabindex="-1"></a>datos_agregados <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="fundamentos.html#cb20-2" tabindex="-1"></a>  <span class="fu">group_by</span>(anio) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="fundamentos.html#cb20-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">casos =</span> <span class="fu">sum</span>(numerocasos))</span>
+<span id="cb20-4"><a href="fundamentos.html#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="fundamentos.html#cb20-5" tabindex="-1"></a><span class="fu">ggplot</span>(datos_agregados, <span class="fu">aes</span>(<span class="at">x =</span> anio, <span class="at">y =</span> casos)) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="fundamentos.html#cb20-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="fundamentos.html#cb20-7" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-8"><a href="fundamentos.html#cb20-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Casos de suicidio por año en Antioquia (2005–2022)&quot;</span>,</span>
+<span id="cb20-9"><a href="fundamentos.html#cb20-9" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de casos&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="fundamentos.html#cb20-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="fundamentos.html#cb21-1" tabindex="-1"></a>datos_agregados<span class="sc">$</span>movil_3 <span class="ot">&lt;-</span> <span class="fu">rollmean</span>(datos_agregados<span class="sc">$</span>casos, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="cn">NA</span>)</span>
+<span id="cb21-2"><a href="fundamentos.html#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="fundamentos.html#cb21-3" tabindex="-1"></a><span class="fu">ggplot</span>(datos_agregados, <span class="fu">aes</span>(<span class="at">x =</span> anio)) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="fundamentos.html#cb21-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> casos), <span class="at">color =</span> <span class="st">&quot;grey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="fundamentos.html#cb21-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> movil_3), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="fundamentos.html#cb21-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Promedio móvil de 3 años&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Casos&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).</code></pre>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="fundamentos.html#cb23-1" tabindex="-1"></a>ts_suicidios <span class="ot">&lt;-</span> <span class="fu">ts</span>(datos_agregados<span class="sc">$</span>casos, <span class="at">start =</span> <span class="dv">2005</span>, <span class="at">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb23-2"><a href="fundamentos.html#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="fundamentos.html#cb23-3" tabindex="-1"></a><span class="fu">acf</span>(ts_suicidios, <span class="at">main =</span> <span class="st">&quot;Función de autocorrelación (ACF)&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
 
 </div>
 </div>
