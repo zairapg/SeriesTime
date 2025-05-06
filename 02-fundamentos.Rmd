@@ -139,7 +139,24 @@ ggplot(suicidios_anuales, aes(x = anio, y = total_suicidios)) +
        x = "Año", y = "Total de suicidios")
 ```
 
-## Promedio Móvil
+La serie muestra una tendencia creciente clara a partir de 2014, con un aumento sostenido en el número de casos de suicidio.  Entre 2005 y 2013, los valores se mantienen relativamente estables,con pequeñas fluctuaciones. Desde 2014 se observa una aceleración en el crecimiento,con picos notables en 2018, 2021 y 2022.
+
+Esto sugiere la presencia de una tendencia no estacionaria, lo que indica que el uso de técnicas como la diferenciación o modelado ARIMA es apropiado para pronóstico y análisis más avanzado.
+
+La gráfica no evidencia patrones cíclicos repetitivos anuales, lo cual es esperable al trabajar con datos anuales.
+
+Aunque hay un patrón creciente, se observan algunos retrocesos puntuales, como en 2020 (probablemente asociado al impacto de la pandemia).
+
+
+Estos descensos temporales podrían representar factores exógenos o eventos sociales que afectaron los reportes o las causas de suicidio.
+
+Estas irregularidades justifican el uso de métodos de suaviza miento como promedios móviles para atenuar las variaciones y destacar la tendencia.
+
+
+## Promedio Movil.
+
+Promedio móvil del número de suicidios por año en Antioquia (2005–2022)
+
 ```{r warning=FALSE}
 #Promedio móvil
 suicidios_anuales <- suicidios_anuales %>%
@@ -151,6 +168,24 @@ ggplot(suicidios_anuales, aes(x = anio)) +
   labs(title = "Promedio móvil de suicidios (k = 3)",
        y = "Número de suicidios")
 ```
+
+
+El anterior gráfico presenta el promedio móvil del número de suicidios por año en Antioquia desde 2005, utilizando una ventana de suavizamiento de k=3. 
+
+De las cual se puede describir lo siguiente:
+
+La línea gris representa los datos anuales reales de suicidios.
+
+La línea azul corresponde al promedio móvil, que suaviza las fluctuaciones anuales para destacar la tendencia general.
+
+Entre 2005 y 2013, el número de suicidios se mantuvo relativamente estable.
+
+A partir de 2014, se observa una tendencia creciente clara, que se intensifica progresivamente hasta 2022.
+
+El promedio móvil permite visualizar un crecimiento sostenido, especialmente desde 2015 en adelante.
+
+Puedo deducir algunas interpretaciones como que el aumento continuo podría estar relacionado con factores estructurales como problemas de salud mental, desigualdades sociales, impactos económicos o, en los años más recientes, efectos derivados de la pandemia.
+
 
 ## Rezagos y autocorrelación
 ```{r warning=FALSE}
@@ -164,17 +199,56 @@ forecast::ggAcf(ts_suicidios) + ggtitle("Función de Autocorrelación (ACF)")
 #decomposicion <- decompose(ts_suicidios, type = "additive")
 #plot(decomposicion)
 ```
+Interpretación de la Función de Autocorrelación (ACF)
+
+Se observa una autocorrelación positiva y significativa en los primeros rezagos:
+
+Rezago 1: aproximadamente 0.75
+
+Rezago 2: aproximadamente 0.60
+
+Rezago 3: ligeramente superior a 0.45
+
+A partir del rezago 4, la autocorrelación disminuye progresivamente y cae dentro del intervalo de no significancia (delimitado por las líneas azules en el gráfico).
+
+Esto indica que los valores actuales del número de suicidios están fuertemente correlacionados con los valores registrados en los últimos 1 a 3 años.
+
+Conclusiones:
+
+Existe una dependencia temporal significativa, especialmente a corto plazo.
+
+La estructura de autocorrelación sugiere que un modelo autoregresivo simple, como AR(1) o AR(2), podría ser adecuado para capturar la dinámica de la serie.
+
+No se identifican patrones de estacionalidad, ya que no se observan picos regulares a intervalos fijos (por ejemplo, cada 12 rezagos, como sería típico en series mensuales con estacionalidad anual).
+
+
+
+
 
 ## Estacionariedad y diferenciación
 ```{r warning=FALSE}
 adf.test(ts_suicidios)  # Prueba de Dickey-Fuller aumentada
 
-# Si no es estacionaria, aplicar diferenciación
+# SComo no es estacionaria, se aplica diferenciación
 ts_diff <- diff(ts_suicidios)
 
 plot(ts_diff, main = "Serie diferenciada", ylab = "Diferencia de suicidios")
-adf.test(ts_diff)  # Verificar estacionariedad después
+adf.test(ts_diff)  # Verifica estacionariedad después
 ```
+
+La gráfica anterior muestra las diferencias anuales en el número de suicidios, lo que permite analizar el comportamiento de los cambios interanuales.
+
+En comparación con la serie original, podemos| obseravr que el comportamiento ahora es más estable, y se ha eliminado la tendencia creciente previamente observada.
+
+No obstante, se evidencian fluctuaciones amplias en ciertos periodos, especialmente después de 2014, lo que podría reflejar cambios estructurales o eventos atípicos en esos años.
+
+A pesar de estas variaciones, no se aprecia una tendencia sostenida en las diferencias, lo que sugiere que la serie podría haberse estacionarizado tras aplicar la primera diferencia.
+
+La ausencia de estacionalidad sugiere que no es necesario aplicar técnicas de descomposición estacional ni modelos SARIMA.
+
+Al tratarse de una serie anual, la estacionalidad no es relevante. El análisis debe centrarse en la tendencia y posibles componentes cíclicos de largo plazo.
+
+
 
 ## Transformación Box-Cox 
 ```{r warning=FALSE}

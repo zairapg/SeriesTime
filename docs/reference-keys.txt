@@ -1,11 +1,12 @@
 intro
+pronóstico-de-suicidios-en-antioquia-2005-2022
 justificación
 por-qué-aplica-para-pronóstico-en-series-de-tiempo
 valor-agregado-del-pronóstico
 fuente-de-los-datos-y-permisos-de-uso
 fundamentos
 exploracion-de-los-datos
-promedio-móvil
+promedio-movil.
 rezagos-y-autocorrelación
 estacionariedad-y-diferenciación
 transformación-box-cox
