@@ -78,7 +78,7 @@ nrow(datos)
 ```
 
 
-## Exploracion de los Datos
+## Exploracion de Datos
 
 Se inicia con la exploracion del Dataset, asi como con el resumen estadistico
 
