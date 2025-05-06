@@ -226,9 +226,32 @@ No se identifican patrones de estacionalidad, ya que no se observan picos regula
 
 
 ## Estacionariedad y diferenciación
+
+Test de Dickey-Fuller Aumentado (ADF)
+
 ```{r warning=FALSE}
 adf.test(ts_suicidios)  # Prueba de Dickey-Fuller aumentada
+```
 
+
+Resultados del Test de Dickey-Fuller Aumentado (ADF)
+
+Al aplicar el test ADF a la serie diferenciada cuyo objetivo era evaluar su estacionariedad. Lo cual genera los siguientes resultados:
+
+Estadístico ADF: –2.2107
+
+Orden de rezago: 2
+
+Valor p: 0.4921
+
+Hipótesis alternativa: la serie es estacionaria
+
+Interpretación:
+
+El valor p obtenido (0.4921) es significativamente mayor que el umbral común de significancia (0.05), por lo tanto, no se rechaza la hipótesis nula de no estacionariedad. Esto sugiere que, incluso después de aplicar una primera diferenciación, la serie aún no cumple con los criterios estadísticos de estacionariedad según el test ADF.
+
+
+```{r warning=FALSE}
 # SComo no es estacionaria, se aplica diferenciación
 ts_diff <- diff(ts_suicidios)
 
