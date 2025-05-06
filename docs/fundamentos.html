@@ -442,6 +442,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## data:  ts_suicidios
 ## Dickey-Fuller = -0.41096, Lag order = 2, p-value = 0.9788
 ## alternative hypothesis: stationary</code></pre>
+<p>Resultado del test ADF:</p>
+<p>Estadístico Dickey-Fuller: –0.41096</p>
+<p>Orden de rezago utilizado: 2</p>
+<p>Valor p: 0.9788</p>
+<p>Hipótesis alternativa: la serie es estacionaria</p>
+<p>Interpretación:</p>
+<p>El valor p obtenido es 0.9788, muy superior al nivel de significancia típico (0.05).</p>
+<p>Por lo tanto, no se rechaza la hipótesis nula del test ADF, que plantea que la serie tiene una raíz unitaria (es decir, no es estacionaria).</p>
+<p>Esto implica que la serie ts_suicidios no es estacionaria, lo cual sugiere que:</p>
+<p>Puede haber tendencias o patrones temporales no constantes.</p>
+<p>No es adecuada para modelos que requieren estacionariedad (como ARIMA) sin transformación previa.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="fundamentos.html#cb22-1" tabindex="-1"></a><span class="co"># SComo no es estacionaria, se aplica diferenciación</span></span>
+<span id="cb22-2"><a href="fundamentos.html#cb22-2" tabindex="-1"></a>ts_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_suicidios)</span>
+<span id="cb22-3"><a href="fundamentos.html#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="fundamentos.html#cb22-4" tabindex="-1"></a><span class="fu">plot</span>(ts_diff, <span class="at">main =</span> <span class="st">&quot;Serie diferenciada&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Diferencia de suicidios&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>La gráfica anterior muestra las diferencias anuales en el número de suicidios, lo que permite analizar el comportamiento de los cambios interanuales.</p>
+<p>En comparación con la serie original, podemos| obseravr que el comportamiento ahora es más estable, y se ha eliminado la tendencia creciente previamente observada.</p>
+<p>No obstante, se evidencian fluctuaciones amplias en ciertos periodos, especialmente después de 2014, lo que podría reflejar cambios estructurales o eventos atípicos en esos años.</p>
+<p>A pesar de estas variaciones, no se aprecia una tendencia sostenida en las diferencias, lo que sugiere que la serie podría haberse estacionarizado tras aplicar la primera diferencia.</p>
+<p>La ausencia de estacionalidad sugiere que no es necesario aplicar técnicas de descomposición estacional ni modelos SARIMA.</p>
+<p>Al tratarse de una serie anual, la estacionalidad no es relevante. El análisis debe centrarse en la tendencia y posibles componentes cíclicos de largo plazo.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="fundamentos.html#cb23-1" tabindex="-1"></a><span class="fu">adf.test</span>(ts_diff)  <span class="co"># Verifica estacionariedad después</span></span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  ts_diff
+## Dickey-Fuller = -2.2107, Lag order = 2, p-value = 0.4921
+## alternative hypothesis: stationary</code></pre>
 <p>Resultados del Test de Dickey-Fuller Aumentado (ADF)</p>
 <p>Al aplicar el test ADF a la serie diferenciada cuyo objetivo era evaluar su estacionariedad. Lo cual genera los siguientes resultados:</p>
 <p>Estadístico ADF: –2.2107</p>
@@ -450,24 +479,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Hipótesis alternativa: la serie es estacionaria</p>
 <p>Interpretación:</p>
 <p>El valor p obtenido (0.4921) es significativamente mayor que el umbral común de significancia (0.05), por lo tanto, no se rechaza la hipótesis nula de no estacionariedad. Esto sugiere que, incluso después de aplicar una primera diferenciación, la serie aún no cumple con los criterios estadísticos de estacionariedad según el test ADF.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="fundamentos.html#cb22-1" tabindex="-1"></a><span class="co"># SComo no es estacionaria, se aplica diferenciación</span></span>
-<span id="cb22-2"><a href="fundamentos.html#cb22-2" tabindex="-1"></a>ts_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_suicidios)</span>
-<span id="cb22-3"><a href="fundamentos.html#cb22-3" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="fundamentos.html#cb22-4" tabindex="-1"></a><span class="fu">plot</span>(ts_diff, <span class="at">main =</span> <span class="st">&quot;Serie diferenciada&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Diferencia de suicidios&quot;</span>)</span></code></pre></div>
-<p><img src="series-tiempo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="fundamentos.html#cb23-1" tabindex="-1"></a><span class="fu">adf.test</span>(ts_diff)  <span class="co"># Verifica estacionariedad después</span></span></code></pre></div>
-<pre><code>## 
-##  Augmented Dickey-Fuller Test
-## 
-## data:  ts_diff
-## Dickey-Fuller = -2.2107, Lag order = 2, p-value = 0.4921
-## alternative hypothesis: stationary</code></pre>
-<p>La gráfica anterior muestra las diferencias anuales en el número de suicidios, lo que permite analizar el comportamiento de los cambios interanuales.</p>
-<p>En comparación con la serie original, podemos| obseravr que el comportamiento ahora es más estable, y se ha eliminado la tendencia creciente previamente observada.</p>
-<p>No obstante, se evidencian fluctuaciones amplias en ciertos periodos, especialmente después de 2014, lo que podría reflejar cambios estructurales o eventos atípicos en esos años.</p>
-<p>A pesar de estas variaciones, no se aprecia una tendencia sostenida en las diferencias, lo que sugiere que la serie podría haberse estacionarizado tras aplicar la primera diferencia.</p>
-<p>La ausencia de estacionalidad sugiere que no es necesario aplicar técnicas de descomposición estacional ni modelos SARIMA.</p>
-<p>Al tratarse de una serie anual, la estacionalidad no es relevante. El análisis debe centrarse en la tendencia y posibles componentes cíclicos de largo plazo.</p>
 </div>
 <div id="transformación-box-cox" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> Transformación Box-Cox<a href="fundamentos.html#transformación-box-cox" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -475,7 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb25-2"><a href="fundamentos.html#cb25-2" tabindex="-1"></a>ts_boxcox <span class="ot">&lt;-</span> <span class="fu">BoxCox</span>(ts_suicidios, lambda)</span>
 <span id="cb25-3"><a href="fundamentos.html#cb25-3" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="fundamentos.html#cb25-4" tabindex="-1"></a><span class="fu">autoplot</span>(ts_boxcox) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Serie transformada con Box-Cox&quot;</span>)</span></code></pre></div>
-<p><img src="series-tiempo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 
 </div>
 </div>
