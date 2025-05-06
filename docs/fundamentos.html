@@ -149,11 +149,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="fundamentos.html"><a href="fundamentos.html"><i class="fa fa-check"></i><b>2</b> Fundamentos Descriptivos</a>
 <ul>
-<li class="chapter" data-level="2.0.1" data-path="fundamentos.html"><a href="fundamentos.html#exploracion-de-los-datos"><i class="fa fa-check"></i><b>2.0.1</b> EXPLORACION DE LOS DATOS</a></li>
-<li class="chapter" data-level="2.1" data-path="fundamentos.html"><a href="fundamentos.html#promedio-movil."><i class="fa fa-check"></i><b>2.1</b> Promedio Movil.</a></li>
-<li class="chapter" data-level="2.2" data-path="fundamentos.html"><a href="fundamentos.html#rezagos-y-autocorrelación"><i class="fa fa-check"></i><b>2.2</b> Rezagos y autocorrelación</a></li>
-<li class="chapter" data-level="2.3" data-path="fundamentos.html"><a href="fundamentos.html#estacionariedad-y-diferenciación"><i class="fa fa-check"></i><b>2.3</b> Estacionariedad y diferenciación</a></li>
-<li class="chapter" data-level="2.4" data-path="fundamentos.html"><a href="fundamentos.html#transformación-box-cox"><i class="fa fa-check"></i><b>2.4</b> Transformación Box-Cox</a></li>
+<li class="chapter" data-level="2.1" data-path="fundamentos.html"><a href="fundamentos.html#exploracion-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> Exploracion de los Datos</a></li>
+<li class="chapter" data-level="2.2" data-path="fundamentos.html"><a href="fundamentos.html#promedio-movil."><i class="fa fa-check"></i><b>2.2</b> Promedio Movil.</a></li>
+<li class="chapter" data-level="2.3" data-path="fundamentos.html"><a href="fundamentos.html#rezagos-y-autocorrelación"><i class="fa fa-check"></i><b>2.3</b> Rezagos y autocorrelación</a></li>
+<li class="chapter" data-level="2.4" data-path="fundamentos.html"><a href="fundamentos.html#estacionariedad-y-diferenciación"><i class="fa fa-check"></i><b>2.4</b> Estacionariedad y diferenciación</a></li>
+<li class="chapter" data-level="2.5" data-path="fundamentos.html"><a href="fundamentos.html#transformación-box-cox"><i class="fa fa-check"></i><b>2.5</b> Transformación Box-Cox</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -198,8 +198,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>número total de registros</strong></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="fundamentos.html#cb5-1" tabindex="-1"></a><span class="fu">nrow</span>(datos)</span></code></pre></div>
 <pre><code>## [1] 2250</code></pre>
-<div id="exploracion-de-los-datos" class="section level3 hasAnchor" number="2.0.1">
-<h3><span class="header-section-number">2.0.1</span> EXPLORACION DE LOS DATOS<a href="fundamentos.html#exploracion-de-los-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="exploracion-de-los-datos" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Exploracion de los Datos<a href="fundamentos.html#exploracion-de-los-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Se inicia con la exploracion del Dataset, asi como con el resumen estadistico</p>
 <p><strong>Estructura del dataset</strong></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="fundamentos.html#cb7-1" tabindex="-1"></a><span class="co"># </span></span>
@@ -387,8 +387,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Estos descensos temporales podrían representar factores exógenos o eventos sociales que afectaron los reportes o las causas de suicidio.</p>
 <p>Estas irregularidades justifican el uso de métodos de suaviza miento como promedios móviles para atenuar las variaciones y destacar la tendencia.</p>
 </div>
-<div id="promedio-movil." class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Promedio Movil.<a href="fundamentos.html#promedio-movil." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="promedio-movil." class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Promedio Movil.<a href="fundamentos.html#promedio-movil." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Promedio móvil del número de suicidios por año en Antioquia (2005–2022)</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="fundamentos.html#cb17-1" tabindex="-1"></a><span class="co">#Promedio móvil</span></span>
 <span id="cb17-2"><a href="fundamentos.html#cb17-2" tabindex="-1"></a>suicidios_anuales <span class="ot">&lt;-</span> suicidios_anuales <span class="sc">%&gt;%</span></span>
@@ -409,8 +409,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>El promedio móvil permite visualizar un crecimiento sostenido, especialmente desde 2015 en adelante.</p>
 <p>Puedo deducir algunas interpretaciones como que el aumento continuo podría estar relacionado con factores estructurales como problemas de salud mental, desigualdades sociales, impactos económicos o, en los años más recientes, efectos derivados de la pandemia.</p>
 </div>
-<div id="rezagos-y-autocorrelación" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Rezagos y autocorrelación<a href="fundamentos.html#rezagos-y-autocorrelación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="rezagos-y-autocorrelación" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Rezagos y autocorrelación<a href="fundamentos.html#rezagos-y-autocorrelación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="fundamentos.html#cb18-1" tabindex="-1"></a>ts_suicidios <span class="ot">&lt;-</span> <span class="fu">ts</span>(suicidios_anuales<span class="sc">$</span>total_suicidios, <span class="at">start =</span> <span class="fu">min</span>(suicidios_anuales<span class="sc">$</span>anio), <span class="at">frequency =</span> <span class="dv">1</span>)</span>
 <span id="cb18-2"><a href="fundamentos.html#cb18-2" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="fundamentos.html#cb18-3" tabindex="-1"></a><span class="co"># Autocorrelación</span></span>
@@ -432,8 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La estructura de autocorrelación sugiere que un modelo autoregresivo simple, como AR(1) o AR(2), podría ser adecuado para capturar la dinámica de la serie.</p>
 <p>No se identifican patrones de estacionalidad, ya que no se observan picos regulares a intervalos fijos (por ejemplo, cada 12 rezagos, como sería típico en series mensuales con estacionalidad anual).</p>
 </div>
-<div id="estacionariedad-y-diferenciación" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Estacionariedad y diferenciación<a href="fundamentos.html#estacionariedad-y-diferenciación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="estacionariedad-y-diferenciación" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Estacionariedad y diferenciación<a href="fundamentos.html#estacionariedad-y-diferenciación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Test de Dickey-Fuller Aumentado (ADF)</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="fundamentos.html#cb20-1" tabindex="-1"></a><span class="fu">adf.test</span>(ts_suicidios)  <span class="co"># Prueba de Dickey-Fuller aumentada</span></span></code></pre></div>
 <pre><code>## 
@@ -480,8 +480,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Interpretación:</p>
 <p>El valor p obtenido (0.4921) es significativamente mayor que el umbral común de significancia (0.05), por lo tanto, no se rechaza la hipótesis nula de no estacionariedad. Esto sugiere que, incluso después de aplicar una primera diferenciación, la serie aún no cumple con los criterios estadísticos de estacionariedad según el test ADF.</p>
 </div>
-<div id="transformación-box-cox" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> Transformación Box-Cox<a href="fundamentos.html#transformación-box-cox" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="transformación-box-cox" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Transformación Box-Cox<a href="fundamentos.html#transformación-box-cox" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="fundamentos.html#cb25-1" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">BoxCox.lambda</span>(ts_suicidios)</span>
 <span id="cb25-2"><a href="fundamentos.html#cb25-2" tabindex="-1"></a>ts_boxcox <span class="ot">&lt;-</span> <span class="fu">BoxCox</span>(ts_suicidios, lambda)</span>
 <span id="cb25-3"><a href="fundamentos.html#cb25-3" tabindex="-1"></a></span>
