@@ -382,4 +382,4 @@ El MASE < 1 significa que el modelo de Holt supera a un modelo ingenuo (que simp
 La autocorrelación casi nula en los residuos sugiere que no queda estructura sin modelar, lo cual respalda la validez del modelo.
 
 
-## Metodologia de Suavizante
+
