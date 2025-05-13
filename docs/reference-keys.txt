@@ -5,8 +5,11 @@ por-qué-aplica-para-pronóstico-en-series-de-tiempo
 valor-agregado-del-pronóstico
 fuente-de-los-datos-y-permisos-de-uso
 fundamentos
-exploracion-de-los-datos
+exploracion-de-datos
 promedio-movil.
 rezagos-y-autocorrelación
 estacionariedad-y-diferenciación
 transformación-box-cox
+holt_winter
+metodologia-de-holt-winters
+metodologia-de-suavizante

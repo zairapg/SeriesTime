@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Series de Tiempo</title>
-  <meta name="description" content="References | Series de Tiempo" />
+  <title>Capítulo 4 Modelado con Holt Winters y Suavizante | Series de Tiempo</title>
+  <meta name="description" content="Capítulo 4 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Series de Tiempo" />
+  <meta property="og:title" content="Capítulo 4 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Series de Tiempo" />
+  <meta name="twitter:title" content="Capítulo 4 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="holt_winter.html"/>
-
+<link rel="prev" href="fundamentos.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -182,17 +182,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered hasAnchor">
-<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="holt_winter" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Modelado con Holt Winters y Suavizante<a href="holt_winter.html#holt_winter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="metodologia-de-holt-winters" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Metodologia de Holt Winters<a href="holt_winter.html#metodologia-de-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El análisis de series temporales es una técnica poderosa en la ciencia de datos que permite descomponer datos históricos en tendencia, estacionalidad y ruido aleatorio, con el fin de predecir el comportamiento futuro de una variable. En el contexto de salud pública, modelar y pronosticar la tasa de suicidios es fundamental para diseñar políticas de prevención y respuesta oportuna.</p>
+<p>El método de Holt-Winters (también llamado suavizamiento exponencial triple) es especialmente útil cuando una serie muestra tanto tendencia como estacionalidad, aspectos frecuentes en datos reales como los de mortalidad o salud mental. El modelo se estructura en torno a tres componentes:</p>
+<p>Nivel (valor base)</p>
+<p>Tendencia (incremento o decremento)</p>
+<p>Estacionalidad (comportamiento cíclico)</p>
+<p>Características de los datos</p>
+<p>La serie temporal usada representa la tasa anual de suicidios por 100.000 habitantes en Antioquia desde 2005 hasta 2022. Se trata de una serie anual (frecuencia 1), por lo cual no se espera una estacionalidad periódica evidente, aunque sí se observa una tendencia creciente a partir de 2014.</p>
+<p>Por esta razón, se aplica el método Holt (sin componente estacional), una variante del modelo de Holt-Winters que ajusta nivel y tendencia, pero no estacionalidad.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="holt_winter.html#cb26-1" tabindex="-1"></a><span class="co"># Aplicar método Holt (sin estacionalidad)</span></span>
+<span id="cb26-2"><a href="holt_winter.html#cb26-2" tabindex="-1"></a>modelo_holt <span class="ot">&lt;-</span> <span class="fu">holt</span>(ts_suicidios, <span class="at">h =</span> <span class="dv">5</span>)  <span class="co"># Pronóstico a 5 años</span></span>
+<span id="cb26-3"><a href="holt_winter.html#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="holt_winter.html#cb26-4" tabindex="-1"></a><span class="co"># Graficar resultados</span></span>
+<span id="cb26-5"><a href="holt_winter.html#cb26-5" tabindex="-1"></a><span class="fu">autoplot</span>(modelo_holt) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="holt_winter.html#cb26-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico con el método de Holt&quot;</span>,</span>
+<span id="cb26-7"><a href="holt_winter.html#cb26-7" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Tasa de suicidios por 100,000 habitantes en Antioquia&quot;</span>,</span>
+<span id="cb26-8"><a href="holt_winter.html#cb26-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Tasa de suicidios&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="holt_winter.html#cb26-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>En este análisis, aplicamos el modelo de Holt a la serie de tiempo anual de la tasa de suicidios por 100.000 habitantes en Antioquia desde 2005 hasta 2022. Como se observa en el gráfico, existe una tendencia creciente notable a partir de 2015, lo cual justifica plenamente el uso de esta metodología.</p>
+<p>La gráfica muestra:</p>
+<p>La línea negra: evolución histórica de la tasa.</p>
+<p>La línea azul: pronóstico para los próximos cinco años (2023–2027).</p>
+<p>Las áreas sombreadas: intervalos de confianza, que permiten visualizar la incertidumbre en los valores proyectados.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="holt_winter.html#cb27-1" tabindex="-1"></a><span class="fu">accuracy</span>(modelo_holt)</span></code></pre></div>
+<pre><code>##                    ME     RMSE      MAE      MPE     MAPE      MASE
+## Training set 6.256508 22.78625 17.07406 1.475734 4.447111 0.7908963
+##                      ACF1
+## Training set -0.002604474</code></pre>
+<p>El MAPE de 4.45% indica que el modelo tiene muy buena precisión para pronosticar la tasa de suicidios, siendo este valor aceptable para aplicaciones sociales.</p>
+<p>El MASE &lt; 1 significa que el modelo de Holt supera a un modelo ingenuo (que simplemente usaría el último valor observado como predicción).</p>
+<p>La autocorrelación casi nula en los residuos sugiere que no queda estructura sin modelar, lo cual respalda la validez del modelo.</p>
+</div>
+<div id="metodologia-de-suavizante" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Metodologia de Suavizante<a href="holt_winter.html#metodologia-de-suavizante" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="holt_winter.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="fundamentos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
