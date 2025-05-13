@@ -382,4 +382,93 @@ El MASE < 1 significa que el modelo de Holt supera a un modelo ingenuo (que simp
 La autocorrelación casi nula en los residuos sugiere que no queda estructura sin modelar, lo cual respalda la validez del modelo.
 
 
-## Metodologia de Suavizante
+
+
+# Metodología Box-Jenkins{#Box-Jenkins}
+
+## Box-Jenkins
+```{r warning=FALSE}
+# Agrupamos datos por año
+suicidios_por_ano <- datos %>%
+  group_by(anio) %>%
+  summarise(suicidios = sum(numerocasos),
+            poblacion = sum(numeropoblacionobjetivo),
+            tasa_suicidios = (suicidios / poblacion) * 100000)
+
+# Ajuste de escalas: llevar la tasa al rango del número de suicidios
+escala <- max(suicidios_por_ano$suicidios) / max(suicidios_por_ano$tasa_suicidios)
+
+# Gráfico con eje secundario escalado
+ggplot(suicidios_por_ano, aes(x = anio)) +
+  geom_line(aes(y = suicidios, color = "Número de suicidios"), size = 1) +
+  geom_line(aes(y = tasa_suicidios * escala, color = "Tasa por 100.000 habitantes"), size = 1) +
+  scale_y_continuous(
+    name = "Número de suicidios",
+    sec.axis = sec_axis(~ . / escala, name = "Tasa por 100.000 hab.")
+  ) +
+  scale_color_manual(values = c("Número de suicidios" = "red", "Tasa por 100.000 habitantes" = "blue")) +
+  labs(title = "Evolución de los suicidios y tasa por año",
+       x = "Año", color = "") +
+  theme_minimal()
+
+```
+
+Evolución de los suicidios y tasa por 100.000 habitantes entre (2005–2022)
+
+La figura anterior presenta la evolución anual del número total de suicidios y la tasa por cada 100.000 habitantes en el departamento de Antioquia, entre los años 2005 y 2022.
+
+Se observa un aumento sostenido tanto en el número absoluto de suicidios como en la tasa ajustada por población, especialmente a partir del año 2014. Esta tendencia sugiere que el fenómeno no se debe exclusivamente al crecimiento poblacional, sino que podría estar asociado a otros factores estructurales o sociales. La tasa por 100.000 habitantes permite controlar este efecto demográfico y revela un comportamiento creciente, lo cual puede representar una señal de alerta en salud pública.
+
+```{r warning=FALSE}
+
+# Ajuste de modelo lineal
+modelo_lineal <- lm(suicidios ~ anio, data = suicidios_por_ano)
+summary(modelo_lineal)
+
+
+
+```
+
+El modelo lineal ajustado muestra una tendencia creciente y significativa en el número de suicidios en Antioquia entre 2005 y 2022, con un aumento promedio de 11.5 casos por año. El modelo explica un 79% de la variabilidad observada, lo cual indica un buen ajuste.
+
+Esta evidencia respalda la necesidad de examinar factores sociales, económicos y de salud pública que puedan estar contribuyendo a este preocupante incremento.
+
+```{r warning=FALSE}
+  ggplot(suicidios_por_ano, aes(x = anio, y = suicidios)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(title = "Tendencia lineal de suicidios en el tiempo",
+       x = "Año", y = "Número de suicidios") +
+  theme_minimal()
+
+```
+
+En la grafica se observa un incremento sostenido en el número de suicidios a lo largo del tiempo.La pendiente positiva de la línea azul indica una tendencia creciente. El intervalo de confianza sugiere que esta tendencia es estadísticamente significativa. Los valores extremos hacia el final (2022) muestran un posible aumento más acelerado que el promedio lineal.
+
+
+```{r warning=FALSE}
+
+# Serie original
+ts_suicidios <- ts(suicidios_por_ano$suicidios, start = 2005)
+
+# Transformación Box-Cox y diferenciación (si no es estacionaria)
+lambda <- BoxCox.lambda(ts_suicidios)
+ts_bc <- BoxCox(ts_suicidios, lambda)
+ts_dif <- diff(ts_bc)
+
+# Verificar estacionariedad nuevamente
+adf.test(ts_dif)
+
+# Ajustar modelo ARIMA
+modelo_arima <- auto.arima(ts_bc)
+summary(modelo_arima)
+
+# Pronóstico
+forecast_arima <- forecast(modelo_arima, h = 5)
+autoplot(forecast_arima) +
+  labs(title = "Pronóstico con modelo ARIMA (estacionario transformado)")
+
+```
+
+
+
