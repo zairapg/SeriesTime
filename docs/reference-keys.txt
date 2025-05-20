@@ -1,5 +1,4 @@
 intro
-pronóstico-de-suicidios-en-antioquia-2005-2022
 justificación
 por-qué-aplica-para-pronóstico-en-series-de-tiempo
 valor-agregado-del-pronóstico
@@ -12,6 +11,6 @@ estacionariedad-y-diferenciación
 transformación-box-cox
 holt_winter
 metodologia-de-holt-winters
-Box-Jenkins
-box-jenkins
 Modelo_lineal_estacionariedad
+Prophet
+justificación-regresiva-y-ajuste-estacionario-en-series-temporales

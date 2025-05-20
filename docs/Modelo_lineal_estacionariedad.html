@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="holt_winter.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="Prophet.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -160,6 +160,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="holt_winter.html"><a href="holt_winter.html#metodologia-de-holt-winters"><i class="fa fa-check"></i><b>3.1</b> Metodologia de Holt Winters</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="Modelo_lineal_estacionariedad.html"><a href="Modelo_lineal_estacionariedad.html"><i class="fa fa-check"></i><b>4</b> Análisis Temporal: Modelos Lineales y Estacionariedad</a></li>
+<li class="chapter" data-level="5" data-path="Prophet.html"><a href="Prophet.html"><i class="fa fa-check"></i><b>5</b> Aplicación del Modelo Prophet</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Prophet.html"><a href="Prophet.html#justificación-regresiva-y-ajuste-estacionario-en-series-temporales"><i class="fa fa-check"></i><b>5.1</b> Justificación Regresiva y Ajuste Estacionario en Series Temporales</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/zairapizo/SeriesTime" target="blank">Publicado con Bookdown</a></li>
@@ -193,18 +197,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-8"><a href="Modelo_lineal_estacionariedad.html#cb29-8" tabindex="-1"></a><span class="co"># Ajuste de escalas: llevar la tasa al rango del número de suicidios</span></span>
 <span id="cb29-9"><a href="Modelo_lineal_estacionariedad.html#cb29-9" tabindex="-1"></a>escala <span class="ot">&lt;-</span> <span class="fu">max</span>(suicidios_por_ano<span class="sc">$</span>suicidios) <span class="sc">/</span> <span class="fu">max</span>(suicidios_por_ano<span class="sc">$</span>tasa_suicidios)</span>
 <span id="cb29-10"><a href="Modelo_lineal_estacionariedad.html#cb29-10" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="Modelo_lineal_estacionariedad.html#cb29-11" tabindex="-1"></a><span class="co"># Gráfico con eje secundario escalado</span></span>
-<span id="cb29-12"><a href="Modelo_lineal_estacionariedad.html#cb29-12" tabindex="-1"></a><span class="fu">ggplot</span>(suicidios_por_ano, <span class="fu">aes</span>(<span class="at">x =</span> anio)) <span class="sc">+</span></span>
-<span id="cb29-13"><a href="Modelo_lineal_estacionariedad.html#cb29-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> suicidios, <span class="at">color =</span> <span class="st">&quot;Número de suicidios&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb29-14"><a href="Modelo_lineal_estacionariedad.html#cb29-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> tasa_suicidios <span class="sc">*</span> escala, <span class="at">color =</span> <span class="st">&quot;Tasa por 100.000 habitantes&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb29-15"><a href="Modelo_lineal_estacionariedad.html#cb29-15" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb29-16"><a href="Modelo_lineal_estacionariedad.html#cb29-16" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Número de suicidios&quot;</span>,</span>
-<span id="cb29-17"><a href="Modelo_lineal_estacionariedad.html#cb29-17" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span> . <span class="sc">/</span> escala, <span class="at">name =</span> <span class="st">&quot;Tasa por 100.000 hab.&quot;</span>)</span>
-<span id="cb29-18"><a href="Modelo_lineal_estacionariedad.html#cb29-18" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb29-19"><a href="Modelo_lineal_estacionariedad.html#cb29-19" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Número de suicidios&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;Tasa por 100.000 habitantes&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb29-20"><a href="Modelo_lineal_estacionariedad.html#cb29-20" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Evolución de los suicidios y tasa por año&quot;</span>,</span>
-<span id="cb29-21"><a href="Modelo_lineal_estacionariedad.html#cb29-21" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb29-22"><a href="Modelo_lineal_estacionariedad.html#cb29-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<span id="cb29-11"><a href="Modelo_lineal_estacionariedad.html#cb29-11" tabindex="-1"></a><span class="co"># Crear nueva columna con la tasa escalada</span></span>
+<span id="cb29-12"><a href="Modelo_lineal_estacionariedad.html#cb29-12" tabindex="-1"></a>suicidios_por_ano <span class="ot">&lt;-</span> suicidios_por_ano <span class="sc">%&gt;%</span></span>
+<span id="cb29-13"><a href="Modelo_lineal_estacionariedad.html#cb29-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tasa_escalada =</span> tasa_suicidios <span class="sc">*</span> escala)</span>
+<span id="cb29-14"><a href="Modelo_lineal_estacionariedad.html#cb29-14" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="Modelo_lineal_estacionariedad.html#cb29-15" tabindex="-1"></a><span class="co"># Graficar</span></span>
+<span id="cb29-16"><a href="Modelo_lineal_estacionariedad.html#cb29-16" tabindex="-1"></a><span class="fu">ggplot</span>(suicidios_por_ano, <span class="fu">aes</span>(<span class="at">x =</span> anio)) <span class="sc">+</span></span>
+<span id="cb29-17"><a href="Modelo_lineal_estacionariedad.html#cb29-17" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> suicidios, <span class="at">color =</span> <span class="st">&quot;Suicidios absolutos&quot;</span>), <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb29-18"><a href="Modelo_lineal_estacionariedad.html#cb29-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> tasa_escalada, <span class="at">color =</span> <span class="st">&quot;Tasa por 100 mil (escalada)&quot;</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb29-19"><a href="Modelo_lineal_estacionariedad.html#cb29-19" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Suicidios absolutos&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;Tasa por 100 mil (escalada)&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkred&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb29-20"><a href="Modelo_lineal_estacionariedad.html#cb29-20" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Evolución anual de suicidios en Antioquia (2005–2022)&quot;</span>,</span>
+<span id="cb29-21"><a href="Modelo_lineal_estacionariedad.html#cb29-21" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de suicidios / Tasa escalada&quot;</span>,</span>
+<span id="cb29-22"><a href="Modelo_lineal_estacionariedad.html#cb29-22" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Indicador&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-23"><a href="Modelo_lineal_estacionariedad.html#cb29-23" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Evolución de los suicidios y tasa por 100.000 habitantes entre (2005–2022)</p>
 <p>La figura anterior presenta la evolución anual del número total de suicidios y la tasa por cada 100.000 habitantes en el departamento de Antioquia, entre los años 2005 y 2022.</p>
@@ -281,7 +286,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb38-3"><a href="Modelo_lineal_estacionariedad.html#cb38-3" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_arima) <span class="sc">+</span></span>
 <span id="cb38-4"><a href="Modelo_lineal_estacionariedad.html#cb38-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico con modelo ARIMA (estacionario transformado)&quot;</span>)</span></code></pre></div>
 <p><img src="series-tiempo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-
 </div>
             </section>
 
@@ -289,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="holt_winter.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Prophet.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

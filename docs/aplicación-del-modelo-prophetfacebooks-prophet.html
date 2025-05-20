@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 3 Modelado con Holt Winters y Suavizante | Series de Tiempo</title>
-  <meta name="description" content="Capítulo 3 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
+  <title>Capítulo 5 Aplicación del Modelo Prophet{#Facebook´s Prophet} | Series de Tiempo</title>
+  <meta name="description" content="Capítulo 5 Aplicación del Modelo Prophet{#Facebook´s Prophet} | Series de Tiempo" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 3 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
+  <meta property="og:title" content="Capítulo 5 Aplicación del Modelo Prophet{#Facebook´s Prophet} | Series de Tiempo" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 3 Modelado con Holt Winters y Suavizante | Series de Tiempo" />
+  <meta name="twitter:title" content="Capítulo 5 Aplicación del Modelo Prophet{#Facebook´s Prophet} | Series de Tiempo" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="fundamentos.html"/>
-<link rel="next" href="Modelo_lineal_estacionariedad.html"/>
+<link rel="prev" href="Modelo_lineal_estacionariedad.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -160,10 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="holt_winter.html"><a href="holt_winter.html#metodologia-de-holt-winters"><i class="fa fa-check"></i><b>3.1</b> Metodologia de Holt Winters</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="Modelo_lineal_estacionariedad.html"><a href="Modelo_lineal_estacionariedad.html"><i class="fa fa-check"></i><b>4</b> Análisis Temporal: Modelos Lineales y Estacionariedad</a></li>
-<li class="chapter" data-level="5" data-path="Prophet.html"><a href="Prophet.html"><i class="fa fa-check"></i><b>5</b> Aplicación del Modelo Prophet</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="Prophet.html"><a href="Prophet.html#justificación-regresiva-y-ajuste-estacionario-en-series-temporales"><i class="fa fa-check"></i><b>5.1</b> Justificación Regresiva y Ajuste Estacionario en Series Temporales</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="aplicación-del-modelo-prophetfacebooks-prophet.html"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html"><i class="fa fa-check"></i><b>5</b> Aplicación del Modelo Prophet{#Facebook´s Prophet}</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/zairapizo/SeriesTime" target="blank">Publicado con Bookdown</a></li>
@@ -185,50 +182,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="holt_winter" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Capítulo 3</span> Modelado con Holt Winters y Suavizante<a href="holt_winter.html#holt_winter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="metodologia-de-holt-winters" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Metodologia de Holt Winters<a href="holt_winter.html#metodologia-de-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El análisis de series temporales es una técnica poderosa en la ciencia de datos que permite descomponer datos históricos en tendencia, estacionalidad y ruido aleatorio, con el fin de predecir el comportamiento futuro de una variable. En el contexto de salud pública, modelar y pronosticar la tasa de suicidios es fundamental para diseñar políticas de prevención y respuesta oportuna.</p>
-<p>El método de Holt-Winters (también llamado suavizamiento exponencial triple) es especialmente útil cuando una serie muestra tanto tendencia como estacionalidad, aspectos frecuentes en datos reales como los de mortalidad o salud mental. El modelo se estructura en torno a tres componentes:</p>
-<p>Nivel (valor base)</p>
-<p>Tendencia (incremento o decremento)</p>
-<p>Estacionalidad (comportamiento cíclico)</p>
-<p>Características de los datos</p>
-<p>La serie temporal usada representa la tasa anual de suicidios por 100.000 habitantes en Antioquia desde 2005 hasta 2022. Se trata de una serie anual (frecuencia 1), por lo cual no se espera una estacionalidad periódica evidente, aunque sí se observa una tendencia creciente a partir de 2014.</p>
-<p>Por esta razón, se aplica el método Holt (sin componente estacional), una variante del modelo de Holt-Winters que ajusta nivel y tendencia, pero no estacionalidad.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="holt_winter.html#cb26-1" tabindex="-1"></a><span class="co"># Aplicar método Holt (sin estacionalidad)</span></span>
-<span id="cb26-2"><a href="holt_winter.html#cb26-2" tabindex="-1"></a>modelo_holt <span class="ot">&lt;-</span> <span class="fu">holt</span>(ts_suicidios, <span class="at">h =</span> <span class="dv">5</span>)  <span class="co"># Pronóstico a 5 años</span></span>
-<span id="cb26-3"><a href="holt_winter.html#cb26-3" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="holt_winter.html#cb26-4" tabindex="-1"></a><span class="co"># Graficar resultados</span></span>
-<span id="cb26-5"><a href="holt_winter.html#cb26-5" tabindex="-1"></a><span class="fu">autoplot</span>(modelo_holt) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="holt_winter.html#cb26-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico con el método de Holt&quot;</span>,</span>
-<span id="cb26-7"><a href="holt_winter.html#cb26-7" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Tasa de suicidios por 100,000 habitantes en Antioquia&quot;</span>,</span>
-<span id="cb26-8"><a href="holt_winter.html#cb26-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Tasa de suicidios&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>) <span class="sc">+</span></span>
-<span id="cb26-9"><a href="holt_winter.html#cb26-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="series-tiempo_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>En este análisis, aplicamos el modelo de Holt a la serie de tiempo anual de la tasa de suicidios por 100.000 habitantes en Antioquia desde 2005 hasta 2022. Como se observa en el gráfico, existe una tendencia creciente notable a partir de 2015, lo cual justifica plenamente el uso de esta metodología.</p>
-<p>La gráfica muestra:</p>
-<p>La línea negra: evolución histórica de la tasa.</p>
-<p>La línea azul: pronóstico para los próximos cinco años (2023–2027).</p>
-<p>Las áreas sombreadas: intervalos de confianza, que permiten visualizar la incertidumbre en los valores proyectados.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="holt_winter.html#cb27-1" tabindex="-1"></a><span class="fu">accuracy</span>(modelo_holt)</span></code></pre></div>
-<pre><code>##                    ME     RMSE      MAE      MPE     MAPE      MASE
-## Training set 6.256508 22.78625 17.07406 1.475734 4.447111 0.7908963
-##                      ACF1
-## Training set -0.002604474</code></pre>
-<p>El MAPE de 4.45% indica que el modelo tiene muy buena precisión para pronosticar la tasa de suicidios, siendo este valor aceptable para aplicaciones sociales.</p>
-<p>El MASE &lt; 1 significa que el modelo de Holt supera a un modelo ingenuo (que simplemente usaría el último valor observado como predicción).</p>
-<p>La autocorrelación casi nula en los residuos sugiere que no queda estructura sin modelar, lo cual respalda la validez del modelo.</p>
-</div>
+<div id="aplicación-del-modelo-prophetfacebooks-prophet" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Aplicación del Modelo Prophet{#Facebook´s Prophet}<a href="aplicación-del-modelo-prophetfacebooks-prophet.html#aplicación-del-modelo-prophetfacebooks-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>##Justificación Regresiva y Ajuste Estacionario en Series Temporales</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-1" tabindex="-1"></a>datos_prophet <span class="ot">&lt;-</span> suicidios_por_ano <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ds =</span> <span class="fu">as.Date</span>(<span class="fu">paste0</span>(anio, <span class="st">&quot;-01-01&quot;</span>)),</span>
+<span id="cb39-3"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-3" tabindex="-1"></a>         <span class="at">y =</span> tasa_suicidios) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-4" tabindex="-1"></a>  <span class="fu">select</span>(ds, y)</span>
+<span id="cb39-5"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-5" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-6" tabindex="-1"></a><span class="co"># Crear modelo y entrenar</span></span>
+<span id="cb39-7"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb39-7" tabindex="-1"></a>modelo_prophet <span class="ot">&lt;-</span> <span class="fu">prophet</span>(datos_prophet)</span></code></pre></div>
+<pre><code>## Disabling weekly seasonality. Run prophet with weekly.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.</code></pre>
+<pre><code>## n.changepoints greater than number of observations. Using 13</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-1" tabindex="-1"></a><span class="co"># Crear data futura (5 años más)</span></span>
+<span id="cb43-2"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-2" tabindex="-1"></a>futuro <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(modelo_prophet, <span class="at">periods =</span> <span class="dv">5</span>, <span class="at">freq =</span> <span class="st">&quot;year&quot;</span>)</span>
+<span id="cb43-3"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-3" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-4" tabindex="-1"></a><span class="co"># Predecir</span></span>
+<span id="cb43-5"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-5" tabindex="-1"></a>pronostico <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_prophet, futuro)</span>
+<span id="cb43-6"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-7" tabindex="-1"></a><span class="co"># Graficar resultados</span></span>
+<span id="cb43-8"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-8" tabindex="-1"></a><span class="fu">plot</span>(modelo_prophet, pronostico) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb43-9" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Proyección de la tasa de suicidios en Antioquia con Prophet&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Línea azul (tendencia): muestra la predicción central de Prophet basada en la tendencia de los datos históricos. En este caso, la tasa de suicidios proyecta una tendencia ligeramente creciente.</p>
+<p>Sombra azul (intervalo de incertidumbre): representa el intervalo de confianza del 95%. Indica que hay incertidumbre creciente hacia el futuro (lo cual es normal).</p>
+<p>Puntos negros: son los valores reales observados. En general, están bien alineados con la tendencia estimada, lo cual sugiere un buen ajuste del modelo.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="aplicación-del-modelo-prophetfacebooks-prophet.html#cb44-1" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(modelo_prophet, pronostico)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="fundamentos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Modelo_lineal_estacionariedad.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Modelo_lineal_estacionariedad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

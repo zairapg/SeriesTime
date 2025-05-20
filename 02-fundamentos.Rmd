@@ -37,6 +37,8 @@ library(httr)
 library(jsonlite)
 library(readxl)
 library(tseries)
+library(prophet)
+
 
 
 
@@ -398,18 +400,20 @@ suicidios_por_ano <- datos %>%
 # Ajuste de escalas: llevar la tasa al rango del número de suicidios
 escala <- max(suicidios_por_ano$suicidios) / max(suicidios_por_ano$tasa_suicidios)
 
-# Gráfico con eje secundario escalado
+# Crear nueva columna con la tasa escalada
+suicidios_por_ano <- suicidios_por_ano %>%
+  mutate(tasa_escalada = tasa_suicidios * escala)
+
+# Graficar
 ggplot(suicidios_por_ano, aes(x = anio)) +
-  geom_line(aes(y = suicidios, color = "Número de suicidios"), size = 1) +
-  geom_line(aes(y = tasa_suicidios * escala, color = "Tasa por 100.000 habitantes"), size = 1) +
-  scale_y_continuous(
-    name = "Número de suicidios",
-    sec.axis = sec_axis(~ . / escala, name = "Tasa por 100.000 hab.")
-  ) +
-  scale_color_manual(values = c("Número de suicidios" = "red", "Tasa por 100.000 habitantes" = "blue")) +
-  labs(title = "Evolución de los suicidios y tasa por año",
-       x = "Año", color = "") +
+  geom_line(aes(y = suicidios, color = "Suicidios absolutos"), size = 1.2) +
+  geom_line(aes(y = tasa_escalada, color = "Tasa por 100 mil (escalada)"), linetype = "dashed", size = 1.2) +
+  scale_color_manual(values = c("Suicidios absolutos" = "steelblue", "Tasa por 100 mil (escalada)" = "darkred")) +
+  labs(title = "Evolución anual de suicidios en Antioquia (2005–2022)",
+       x = "Año", y = "Número de suicidios / Tasa escalada",
+       color = "Indicador") +
   theme_minimal()
+
 
 ```
 
@@ -470,3 +474,41 @@ autoplot(forecast_arima) +
 
 
 
+# Aplicación del Modelo Prophet{#Prophet}
+
+## Justificación Regresiva y Ajuste Estacionario en Series Temporales
+
+```{r warning=FALSE}
+
+datos_prophet <- suicidios_por_ano %>%
+  mutate(ds = as.Date(paste0(anio, "-01-01")),
+         y = tasa_suicidios) %>%
+  select(ds, y)
+
+# Crear modelo y entrenar
+modelo_prophet <- prophet(datos_prophet)
+
+# Crear data futura (5 años más)
+futuro <- make_future_dataframe(modelo_prophet, periods = 5, freq = "year")
+
+# Predecir
+pronostico <- predict(modelo_prophet, futuro)
+
+# Graficar resultados
+plot(modelo_prophet, pronostico) +
+  ggtitle("Proyección de la tasa de suicidios en Antioquia con Prophet")
+
+```
+
+
+
+Línea azul (tendencia): muestra la predicción central de Prophet basada en la tendencia de los datos históricos. En este caso, la tasa de suicidios proyecta una tendencia ligeramente creciente.
+
+Sombra azul (intervalo de incertidumbre): representa el intervalo de confianza del 95%. Indica que hay incertidumbre creciente hacia el futuro (lo cual es normal).
+
+Puntos negros: son los valores reales observados. En general, están bien alineados con la tendencia estimada, lo cual sugiere un buen ajuste del modelo.
+
+
+```{r}
+prophet_plot_components(modelo_prophet, pronostico)
+```
