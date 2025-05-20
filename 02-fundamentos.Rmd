@@ -383,6 +383,7 @@ La autocorrelación casi nula en los residuos sugiere que no queda estructura si
 
 
 
+<<<<<<< HEAD
 
 # Metodología Box-Jenkins{#Box-Jenkins}
 
@@ -472,3 +473,5 @@ autoplot(forecast_arima) +
 
 
 
+=======
+>>>>>>> 578fc4e0dcf74a5bf1e553212d8bd55843614dec
