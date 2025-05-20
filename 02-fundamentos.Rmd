@@ -384,9 +384,9 @@ La autocorrelación casi nula en los residuos sugiere que no queda estructura si
 
 
 
-# Metodología Box-Jenkins{#Box-Jenkins}
+# Análisis Temporal: Modelos Lineales y Estacionariedad {#Modelo_lineal_estacionariedad}
 
-## Box-Jenkins
+
 ```{r warning=FALSE}
 # Agrupamos datos por año
 suicidios_por_ano <- datos %>%

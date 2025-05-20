@@ -14,3 +14,4 @@ holt_winter
 metodologia-de-holt-winters
 Box-Jenkins
 box-jenkins
+Modelo_lineal_estacionariedad
