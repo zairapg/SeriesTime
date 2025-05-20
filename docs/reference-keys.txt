@@ -12,6 +12,5 @@ estacionariedad-y-diferenciación
 transformación-box-cox
 holt_winter
 metodologia-de-holt-winters
-metodologia-de-suavizante
 Box-Jenkins
 box-jenkins
