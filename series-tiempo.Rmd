@@ -1,3 +1,36 @@
+---
+title: "Series de Tiempo"
+author: "Zaira Idaly Pizo Gurrute"
+date: "2025-04-14"
+site: bookdown::bookdown_site
+documentclass: book
+output: bookdown::gitbook
+---
+---
+title: "Series de Tiempo"
+author: "Zaira Idaly Pizo Gurrute"
+date: "2025-04-14"
+site: bookdown::bookdown_site
+documentclass: book
+output: bookdown::gitbook
+---
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Introduction {#intro}
+
+Placeholder
+
+
+## Justificación
+## ¿Por qué aplica para pronóstico en series de tiempo?
+## Valor agregado del pronóstico
+## Fuente de los datos y permisos de uso
+
+<!--chapter:end:01-intro.Rmd-->
+
 # Fundamentos Descriptivos {#fundamentos}
 
 
@@ -469,4 +502,13 @@ autoplot(forecast_arima) +
 ```
 
 
+
+
+<!--chapter:end:02-fundamentos.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:06-references.Rmd-->
 
