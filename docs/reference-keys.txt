@@ -12,6 +12,4 @@ estacionariedad-y-diferenciación
 transformación-box-cox
 holt_winter
 metodologia-de-holt-winters
-Box-Jenkins
-box-jenkins
 Modelo_lineal_estacionariedad
