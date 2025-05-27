@@ -15,3 +15,8 @@ metodologia-de-holt-winters
 Modelo_lineal_estacionariedad
 Prophet
 justificación-regresiva-y-ajuste-estacionario-en-series-temporales
+Rneuronales
+redes-neuronales-elman
+tab:unnamed-chunk-26
+redes-neuronales-jordan
+desempeño-de-redes-elman-y-jordan

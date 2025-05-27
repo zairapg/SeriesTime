@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 6 Redes Neuronales | Series de Tiempo</title>
+  <meta name="description" content="Capítulo 6 Redes Neuronales | Series de Tiempo" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 6 Redes Neuronales | Series de Tiempo" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 6 Redes Neuronales | Series de Tiempo" />
+  
+  
+  
+
+<meta name="author" content="Zaira Idaly Pizo Gurrute" />
+
+
+<meta name="date" content="2025-04-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Prophet.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Series de Tiempo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#justificación"><i class="fa fa-check"></i><b>1.1</b> Justificación</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#por-qué-aplica-para-pronóstico-en-series-de-tiempo"><i class="fa fa-check"></i><b>1.2</b> ¿Por qué aplica para pronóstico en series de tiempo?</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#valor-agregado-del-pronóstico"><i class="fa fa-check"></i><b>1.3</b> Valor agregado del pronóstico</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#fuente-de-los-datos-y-permisos-de-uso"><i class="fa fa-check"></i><b>1.4</b> Fuente de los datos y permisos de uso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="fundamentos.html"><a href="fundamentos.html"><i class="fa fa-check"></i><b>2</b> Fundamentos Descriptivos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="fundamentos.html"><a href="fundamentos.html#exploracion-de-datos"><i class="fa fa-check"></i><b>2.1</b> Exploracion de Datos</a></li>
+<li class="chapter" data-level="2.2" data-path="fundamentos.html"><a href="fundamentos.html#promedio-movil."><i class="fa fa-check"></i><b>2.2</b> Promedio Movil.</a></li>
+<li class="chapter" data-level="2.3" data-path="fundamentos.html"><a href="fundamentos.html#rezagos-y-autocorrelación"><i class="fa fa-check"></i><b>2.3</b> Rezagos y autocorrelación</a></li>
+<li class="chapter" data-level="2.4" data-path="fundamentos.html"><a href="fundamentos.html#estacionariedad-y-diferenciación"><i class="fa fa-check"></i><b>2.4</b> Estacionariedad y diferenciación</a></li>
+<li class="chapter" data-level="2.5" data-path="fundamentos.html"><a href="fundamentos.html#transformación-box-cox"><i class="fa fa-check"></i><b>2.5</b> Transformación Box-Cox</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="holt_winter.html"><a href="holt_winter.html"><i class="fa fa-check"></i><b>3</b> Modelado con Holt Winters y Suavizante</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="holt_winter.html"><a href="holt_winter.html#metodologia-de-holt-winters"><i class="fa fa-check"></i><b>3.1</b> Metodologia de Holt Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Modelo_lineal_estacionariedad.html"><a href="Modelo_lineal_estacionariedad.html"><i class="fa fa-check"></i><b>4</b> Análisis Temporal: Modelos Lineales y Estacionariedad</a></li>
+<li class="chapter" data-level="5" data-path="Prophet.html"><a href="Prophet.html"><i class="fa fa-check"></i><b>5</b> Aplicación del Modelo Prophet</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Prophet.html"><a href="Prophet.html#justificación-regresiva-y-ajuste-estacionario-en-series-temporales"><i class="fa fa-check"></i><b>5.1</b> Justificación Regresiva y Ajuste Estacionario en Series Temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Rneuronales.html"><a href="Rneuronales.html"><i class="fa fa-check"></i><b>6</b> Redes Neuronales</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Rneuronales.html"><a href="Rneuronales.html#redes-neuronales-elman"><i class="fa fa-check"></i><b>6.1</b> Redes Neuronales: ELMAN</a></li>
+<li class="chapter" data-level="6.2" data-path="Rneuronales.html"><a href="Rneuronales.html#redes-neuronales-jordan"><i class="fa fa-check"></i><b>6.2</b> Redes Neuronales: JORDAN</a></li>
+<li class="chapter" data-level="6.3" data-path="Rneuronales.html"><a href="Rneuronales.html#desempeño-de-redes-elman-y-jordan"><i class="fa fa-check"></i><b>6.3</b> Desempeño de redes ELMAN y JORDAN</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/zairapizo/SeriesTime" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Rneuronales" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> Redes Neuronales<a href="Rneuronales.html#Rneuronales" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="redes-neuronales-elman" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Redes Neuronales: ELMAN<a href="Rneuronales.html#redes-neuronales-elman" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una Red Neuronal Recurrente (RNN, por sus siglas en inglés) es un tipo de red neuronal que se utiliza para procesar datos secuenciales, como texto, audio o series temporales. A diferencia de las redes neuronales tradicionales, las RNN tienen conexiones que permiten que la información fluya en ciclos, lo que les otorga la capacidad de “recordar” información de entradas anteriores. Esto las hace especialmente útiles para tareas como la traducción automática, el análisis de sentimientos y la predicción de series temporales.</p>
+<p>La arquitectura de Elman es una variante simple de las RNN, propuesta por Jeffrey Elman en 1990. Su principal característica es la inclusión de una capa de “contexto” que almacena una copia de las activaciones de la capa oculta en el paso de tiempo anterior.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="Rneuronales.html#cb45-1" tabindex="-1"></a><span class="co"># Agrupar por año para todo Antioquia</span></span>
+<span id="cb45-2"><a href="Rneuronales.html#cb45-2" tabindex="-1"></a>serie_anual <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="Rneuronales.html#cb45-3" tabindex="-1"></a>  <span class="fu">group_by</span>(anio) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="Rneuronales.html#cb45-4" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb45-5"><a href="Rneuronales.html#cb45-5" tabindex="-1"></a>    <span class="at">total_poblacion =</span> <span class="fu">sum</span>(numeropoblacionobjetivo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb45-6"><a href="Rneuronales.html#cb45-6" tabindex="-1"></a>    <span class="at">total_casos =</span> <span class="fu">sum</span>(numerocasos, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-7"><a href="Rneuronales.html#cb45-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb45-8"><a href="Rneuronales.html#cb45-8" tabindex="-1"></a>  <span class="fu">arrange</span>(anio)</span>
+<span id="cb45-9"><a href="Rneuronales.html#cb45-9" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="Rneuronales.html#cb45-10" tabindex="-1"></a><span class="co"># Verificar la serie</span></span>
+<span id="cb45-11"><a href="Rneuronales.html#cb45-11" tabindex="-1"></a><span class="fu">print</span>(serie_anual)</span></code></pre></div>
+<pre><code>## # A tibble: 18 × 3
+##     anio total_poblacion total_casos
+##    &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+##  1  2005         5294419         327
+##  2  2006         5037432         328
+##  3  2007         5064900         296
+##  4  2008         5162473         338
+##  5  2009         5309573         335
+##  6  2010         5445884         326
+##  7  2011         5709729         325
+##  8  2012         5496977         329
+##  9  2013         5654138         330
+## 10  2014         5942561         323
+## 11  2015         5856727         374
+## 12  2016         6102826         400
+## 13  2017         6000779         392
+## 14  2018         6269168         434
+## 15  2019         6252738         476
+## 16  2020         6357981         453
+## 17  2021         6491985         488
+## 18  2022         6567697         528</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="Rneuronales.html#cb47-1" tabindex="-1"></a><span class="co"># Crear objeto ts</span></span>
+<span id="cb47-2"><a href="Rneuronales.html#cb47-2" tabindex="-1"></a>ts_casos <span class="ot">&lt;-</span> <span class="fu">ts</span>(serie_anual<span class="sc">$</span>total_casos, <span class="at">start =</span> <span class="fu">min</span>(serie_anual<span class="sc">$</span>anio), <span class="at">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb47-3"><a href="Rneuronales.html#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="Rneuronales.html#cb47-4" tabindex="-1"></a><span class="co"># Gráfico de la serie</span></span>
+<span id="cb47-5"><a href="Rneuronales.html#cb47-5" tabindex="-1"></a><span class="fu">plot</span>(ts_casos, <span class="at">main =</span> <span class="st">&quot;Número de suicidios anuales en Antioquia&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Casos&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="Rneuronales.html#cb48-1" tabindex="-1"></a><span class="co"># Normalización</span></span>
+<span id="cb48-2"><a href="Rneuronales.html#cb48-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> serie_anual<span class="sc">$</span>total_casos</span>
+<span id="cb48-3"><a href="Rneuronales.html#cb48-3" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb48-4"><a href="Rneuronales.html#cb48-4" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="Rneuronales.html#cb48-5" tabindex="-1"></a><span class="co"># Lag 1</span></span>
+<span id="cb48-6"><a href="Rneuronales.html#cb48-6" tabindex="-1"></a>X <span class="ot">&lt;-</span> x_norm[<span class="sc">-</span><span class="fu">length</span>(x_norm)]  <span class="co"># t</span></span>
+<span id="cb48-7"><a href="Rneuronales.html#cb48-7" tabindex="-1"></a>Y <span class="ot">&lt;-</span> x_norm[<span class="sc">-</span><span class="dv">1</span>]               <span class="co"># t+1</span></span>
+<span id="cb48-8"><a href="Rneuronales.html#cb48-8" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="Rneuronales.html#cb48-9" tabindex="-1"></a><span class="co"># Red ELMAN</span></span>
+<span id="cb48-10"><a href="Rneuronales.html#cb48-10" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb48-11"><a href="Rneuronales.html#cb48-11" tabindex="-1"></a>model_elman <span class="ot">&lt;-</span> <span class="fu">elman</span>(</span>
+<span id="cb48-12"><a href="Rneuronales.html#cb48-12" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">matrix</span>(X, <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb48-13"><a href="Rneuronales.html#cb48-13" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">matrix</span>(Y, <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb48-14"><a href="Rneuronales.html#cb48-14" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">5</span>),</span>
+<span id="cb48-15"><a href="Rneuronales.html#cb48-15" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.1</span>),</span>
+<span id="cb48-16"><a href="Rneuronales.html#cb48-16" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">1000</span>,</span>
+<span id="cb48-17"><a href="Rneuronales.html#cb48-17" tabindex="-1"></a>  <span class="at">linOut =</span> <span class="cn">TRUE</span></span>
+<span id="cb48-18"><a href="Rneuronales.html#cb48-18" tabindex="-1"></a>)</span>
+<span id="cb48-19"><a href="Rneuronales.html#cb48-19" tabindex="-1"></a></span>
+<span id="cb48-20"><a href="Rneuronales.html#cb48-20" tabindex="-1"></a><span class="co"># Predicción</span></span>
+<span id="cb48-21"><a href="Rneuronales.html#cb48-21" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_elman, <span class="fu">matrix</span>(X, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb48-22"><a href="Rneuronales.html#cb48-22" tabindex="-1"></a></span>
+<span id="cb48-23"><a href="Rneuronales.html#cb48-23" tabindex="-1"></a><span class="co"># Desnormalizar</span></span>
+<span id="cb48-24"><a href="Rneuronales.html#cb48-24" tabindex="-1"></a>pred_desnorm <span class="ot">&lt;-</span> pred <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span>
+<span id="cb48-25"><a href="Rneuronales.html#cb48-25" tabindex="-1"></a>real_desnorm <span class="ot">&lt;-</span> Y <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span>
+<span id="cb48-26"><a href="Rneuronales.html#cb48-26" tabindex="-1"></a></span>
+<span id="cb48-27"><a href="Rneuronales.html#cb48-27" tabindex="-1"></a><span class="co"># Evaluación</span></span>
+<span id="cb48-28"><a href="Rneuronales.html#cb48-28" tabindex="-1"></a>mae <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(pred_desnorm <span class="sc">-</span> real_desnorm))</span>
+<span id="cb48-29"><a href="Rneuronales.html#cb48-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MAE:&quot;</span>, <span class="fu">round</span>(mae, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## MAE: 26.04</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="Rneuronales.html#cb50-1" tabindex="-1"></a><span class="co"># Gráfica</span></span>
+<span id="cb50-2"><a href="Rneuronales.html#cb50-2" tabindex="-1"></a><span class="fu">plot</span>(real_desnorm, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Suicidios&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Predicción Red ELMAN - Antioquia&quot;</span>)</span>
+<span id="cb50-3"><a href="Rneuronales.html#cb50-3" tabindex="-1"></a><span class="fu">lines</span>(pred_desnorm, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb50-4"><a href="Rneuronales.html#cb50-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predicho&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>La Línea en Azul (Real): Representa los valores reales del número de suicidios por año en Antioquia.
+La línea en Rojo (Predicho): Muestra las predicciones generadas por la red neuronal ELMAN.</p>
+<p>En tendencia general, en la red ELMAN se logra capturar bastante bien la tendencia ascendente de los datos reales, especialmente a partir del índice 10 (posiblemente desde el año 2012 en adelante). Se puede decir que hay una coherencia general en la forma de ambas curvas, lo que indica un buen aprendizaje de patrones globales.</p>
+<p>En cuanto a errores y desviaciones: En los primeros años (índices 1 a 4), hay una sobreestimación clara por parte de la red. En los años intermedios (índices 5 a 10), la red tiende a subestimar ligeramente los valores reales. Al final de la serie, aunque el modelo predice correctamente el crecimiento, hay ligeras diferencias en magnitud.</p>
+<p>La red tiene un precisión relativa ya que no captura del todo las fluctuaciones pequeñas, pero sí el comportamiento a largo plazo.</p>
+<p>Esto sugiere que el modelo puede tener buen MAPE o RMSE global, pero errores puntuales en valores individuales.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="Rneuronales.html#cb51-1" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((pred_desnorm <span class="sc">-</span> real_desnorm)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb51-2"><a href="Rneuronales.html#cb51-2" tabindex="-1"></a>mape <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>((real_desnorm <span class="sc">-</span> pred_desnorm) <span class="sc">/</span> real_desnorm)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb51-3"><a href="Rneuronales.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="Rneuronales.html#cb51-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MAE:&quot;</span>, <span class="fu">round</span>(mae, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## MAE: 26.04</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="Rneuronales.html#cb53-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;RMSE:&quot;</span>, <span class="fu">round</span>(rmse, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## RMSE: 34.37</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="Rneuronales.html#cb55-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MAPE (%):&quot;</span>, <span class="fu">round</span>(mape, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## MAPE (%): 7.41</code></pre>
+<p>Evaluacion de las métricas como MAE, RMSE y MAPE.</p>
+<p>MAE (Error Absoluto Medio): 26.04
+En promedio, el modelo se equivoca en aproximadamente 26 casos de suicidio por año.</p>
+<p>RMSE (Raíz del Error Cuadrático Medio): 34.37
+Penaliza más fuertemente los errores grandes. Este valor es razonable si el rango de suicidios está entre 300 y 550.</p>
+<p>MAPE (Error Porcentual Medio Absoluto): 7.41%
+Muy buen resultado: indica que, en promedio, el modelo comete un error del 7.41% respecto al valor real. En series temporales sociales, un MAPE &lt;10% se considera muy preciso.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="Rneuronales.html#cb57-1" tabindex="-1"></a><span class="co"># Último valor conocido</span></span>
+<span id="cb57-2"><a href="Rneuronales.html#cb57-2" tabindex="-1"></a>ultimo_valor <span class="ot">&lt;-</span> <span class="fu">tail</span>(x_norm, <span class="dv">1</span>)</span>
+<span id="cb57-3"><a href="Rneuronales.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="Rneuronales.html#cb57-4" tabindex="-1"></a><span class="co"># Crear una matriz para guardar las predicciones</span></span>
+<span id="cb57-5"><a href="Rneuronales.html#cb57-5" tabindex="-1"></a>pred_futuro_norm <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">2</span>)</span>
+<span id="cb57-6"><a href="Rneuronales.html#cb57-6" tabindex="-1"></a>entrada <span class="ot">&lt;-</span> <span class="fu">matrix</span>(ultimo_valor, <span class="at">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb57-7"><a href="Rneuronales.html#cb57-7" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="Rneuronales.html#cb57-8" tabindex="-1"></a><span class="co"># Predicción recursiva para 2023 , 2024, 2025</span></span>
+<span id="cb57-9"><a href="Rneuronales.html#cb57-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb57-10"><a href="Rneuronales.html#cb57-10" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_elman, entrada)</span>
+<span id="cb57-11"><a href="Rneuronales.html#cb57-11" tabindex="-1"></a>  pred_futuro_norm[i] <span class="ot">&lt;-</span> pred</span>
+<span id="cb57-12"><a href="Rneuronales.html#cb57-12" tabindex="-1"></a>  entrada <span class="ot">&lt;-</span> <span class="fu">matrix</span>(pred, <span class="at">ncol =</span> <span class="dv">1</span>)  <span class="co"># La entrada para el siguiente año es la predicción actual</span></span>
+<span id="cb57-13"><a href="Rneuronales.html#cb57-13" tabindex="-1"></a>}</span>
+<span id="cb57-14"><a href="Rneuronales.html#cb57-14" tabindex="-1"></a></span>
+<span id="cb57-15"><a href="Rneuronales.html#cb57-15" tabindex="-1"></a><span class="co"># Desnormalizar predicciones</span></span>
+<span id="cb57-16"><a href="Rneuronales.html#cb57-16" tabindex="-1"></a>pred_futuro <span class="ot">&lt;-</span> pred_futuro_norm <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span>
+<span id="cb57-17"><a href="Rneuronales.html#cb57-17" tabindex="-1"></a></span>
+<span id="cb57-18"><a href="Rneuronales.html#cb57-18" tabindex="-1"></a><span class="co"># Años a predecir</span></span>
+<span id="cb57-19"><a href="Rneuronales.html#cb57-19" tabindex="-1"></a>anios_futuros <span class="ot">&lt;-</span> <span class="fu">max</span>(serie_anual<span class="sc">$</span>anio) <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb57-20"><a href="Rneuronales.html#cb57-20" tabindex="-1"></a></span>
+<span id="cb57-21"><a href="Rneuronales.html#cb57-21" tabindex="-1"></a><span class="co"># Mostrar resultados</span></span>
+<span id="cb57-22"><a href="Rneuronales.html#cb57-22" tabindex="-1"></a>futuro <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-23"><a href="Rneuronales.html#cb57-23" tabindex="-1"></a>  <span class="at">anio =</span> anios_futuros,</span>
+<span id="cb57-24"><a href="Rneuronales.html#cb57-24" tabindex="-1"></a>  <span class="at">pred_suicidios =</span> <span class="fu">round</span>(pred_futuro)</span>
+<span id="cb57-25"><a href="Rneuronales.html#cb57-25" tabindex="-1"></a>)</span>
+<span id="cb57-26"><a href="Rneuronales.html#cb57-26" tabindex="-1"></a><span class="fu">print</span>(futuro)</span></code></pre></div>
+<pre><code>##   anio pred_suicidios
+## 1 2023            542
+## 2 2024            557
+## 3 2025            569</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="Rneuronales.html#cb59-1" tabindex="-1"></a><span class="co"># Grafica de predicciones</span></span>
+<span id="cb59-2"><a href="Rneuronales.html#cb59-2" tabindex="-1"></a>serie_completa <span class="ot">&lt;-</span> <span class="fu">c</span>(x, pred_futuro)</span>
+<span id="cb59-3"><a href="Rneuronales.html#cb59-3" tabindex="-1"></a>anios_completos <span class="ot">&lt;-</span> <span class="fu">c</span>(serie_anual<span class="sc">$</span>anio, anios_futuros)</span>
+<span id="cb59-4"><a href="Rneuronales.html#cb59-4" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="Rneuronales.html#cb59-5" tabindex="-1"></a><span class="fu">plot</span>(anios_completos, serie_completa, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>, </span>
+<span id="cb59-6"><a href="Rneuronales.html#cb59-6" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción ELMAN - Suicidios Antioquia&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Número de suicidios&quot;</span>)</span>
+<span id="cb59-7"><a href="Rneuronales.html#cb59-7" tabindex="-1"></a><span class="fu">lines</span>(serie_anual<span class="sc">$</span>anio, x, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb59-8"><a href="Rneuronales.html#cb59-8" tabindex="-1"></a><span class="fu">points</span>(anios_futuros, pred_futuro, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb59-9"><a href="Rneuronales.html#cb59-9" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Histórico&quot;</span>, <span class="st">&quot;Pronóstico&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">19</span>))</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="redes-neuronales-jordan" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Redes Neuronales: JORDAN<a href="Rneuronales.html#redes-neuronales-jordan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="Rneuronales.html#cb60-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> suicidios_anuales<span class="sc">$</span>total_suicidios</span>
+<span id="cb60-2"><a href="Rneuronales.html#cb60-2" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb60-3"><a href="Rneuronales.html#cb60-3" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="Rneuronales.html#cb60-4" tabindex="-1"></a><span class="co"># Crear conjuntos de entrada y salida (lag = 1)</span></span>
+<span id="cb60-5"><a href="Rneuronales.html#cb60-5" tabindex="-1"></a>input <span class="ot">&lt;-</span> x_norm[<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(x_norm) <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb60-6"><a href="Rneuronales.html#cb60-6" tabindex="-1"></a>output <span class="ot">&lt;-</span> x_norm[<span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(x_norm)]</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="Rneuronales.html#cb61-1" tabindex="-1"></a><span class="co"># Crear red JORDAN</span></span>
+<span id="cb61-2"><a href="Rneuronales.html#cb61-2" tabindex="-1"></a>model_jordan <span class="ot">&lt;-</span> <span class="fu">jordan</span>(<span class="at">x =</span> <span class="fu">matrix</span>(input, <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb61-3"><a href="Rneuronales.html#cb61-3" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">matrix</span>(output, <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb61-4"><a href="Rneuronales.html#cb61-4" tabindex="-1"></a>                       <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">5</span>), <span class="co"># 5 neuronas ocultas</span></span>
+<span id="cb61-5"><a href="Rneuronales.html#cb61-5" tabindex="-1"></a>                       <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.1</span>), <span class="co"># tasa de aprendizaje</span></span>
+<span id="cb61-6"><a href="Rneuronales.html#cb61-6" tabindex="-1"></a>                       <span class="at">maxit =</span> <span class="dv">1000</span>,</span>
+<span id="cb61-7"><a href="Rneuronales.html#cb61-7" tabindex="-1"></a>                       <span class="at">linOut =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="Rneuronales.html#cb62-1" tabindex="-1"></a><span class="co">#Predicción con la red</span></span>
+<span id="cb62-2"><a href="Rneuronales.html#cb62-2" tabindex="-1"></a>pred_jordan_norm <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_jordan, <span class="fu">matrix</span>(input, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb62-3"><a href="Rneuronales.html#cb62-3" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="Rneuronales.html#cb62-4" tabindex="-1"></a><span class="co"># Desnormalizar</span></span>
+<span id="cb62-5"><a href="Rneuronales.html#cb62-5" tabindex="-1"></a>pred_jordan <span class="ot">&lt;-</span> pred_jordan_norm <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span>
+<span id="cb62-6"><a href="Rneuronales.html#cb62-6" tabindex="-1"></a>real <span class="ot">&lt;-</span> output <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="Rneuronales.html#cb63-1" tabindex="-1"></a>mae_jordan <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(real <span class="sc">-</span> pred_jordan))</span>
+<span id="cb63-2"><a href="Rneuronales.html#cb63-2" tabindex="-1"></a>rmse_jordan <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((real <span class="sc">-</span> pred_jordan)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb63-3"><a href="Rneuronales.html#cb63-3" tabindex="-1"></a>mape_jordan <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>((real <span class="sc">-</span> pred_jordan) <span class="sc">/</span> real)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb63-4"><a href="Rneuronales.html#cb63-4" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="Rneuronales.html#cb63-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MAE Jordan:&quot;</span>, <span class="fu">round</span>(mae_jordan, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## MAE Jordan: 24.79</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="Rneuronales.html#cb65-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;RMSE Jordan:&quot;</span>, <span class="fu">round</span>(rmse_jordan, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## RMSE Jordan: 28.75</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="Rneuronales.html#cb67-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MAPE Jordan (%):&quot;</span>, <span class="fu">round</span>(mape_jordan, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## MAPE Jordan (%): 6.93</code></pre>
+<p>MAE (Error Absoluto Medio): 24.79
+En promedio, el modelo se equivoca en aproximadamente 25 casos de suicidio por año.</p>
+<p>RMSE (Raíz del Error Cuadrático Medio): 28.75
+Los errores más grandes elevan esta media, pero está relativamente cercana al MAE, lo que indica que no hay errores extremos.</p>
+<p>MAPE (Error Porcentual Medio Absoluto): 6.93%
+Excelente: menos del 10% de error relativo medio.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="Rneuronales.html#cb69-1" tabindex="-1"></a><span class="fu">plot</span>(real, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(real, pred_jordan)),</span>
+<span id="cb69-2"><a href="Rneuronales.html#cb69-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción Red JORDAN - Antioquia&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Suicidios&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Index&quot;</span>)</span>
+<span id="cb69-3"><a href="Rneuronales.html#cb69-3" tabindex="-1"></a><span class="fu">lines</span>(pred_jordan, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb69-4"><a href="Rneuronales.html#cb69-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predicho&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>La línea roja (predicción) sigue bastante bien la tendencia y la forma de la línea azul (valores reales), especialmente en la parte ascendente (años más recientes).</p>
+<p>Esto indica que la red JORDAN ha logrado capturar la estructura temporal de la serie, incluyendo el crecimiento progresivo de los casos.</p>
+<p>En algunos años (por ejemplo, al inicio de la serie), hay cierta sobreestimación: la red predice más suicidios que los que realmente ocurrieron.</p>
+<p>La red JORDAN ajusta bien el comportamiento creciente de los suicidios en los últimos años (del año 10 en adelante), mostrando capacidad para generalizar tendencias de largo plazo.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="Rneuronales.html#cb70-1" tabindex="-1"></a><span class="co"># Función para evaluar</span></span>
+<span id="cb70-2"><a href="Rneuronales.html#cb70-2" tabindex="-1"></a>evaluar_modelo <span class="ot">&lt;-</span> <span class="cf">function</span>(real, pred) {</span>
+<span id="cb70-3"><a href="Rneuronales.html#cb70-3" tabindex="-1"></a>  mae <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(real <span class="sc">-</span> pred))</span>
+<span id="cb70-4"><a href="Rneuronales.html#cb70-4" tabindex="-1"></a>  rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((real <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb70-5"><a href="Rneuronales.html#cb70-5" tabindex="-1"></a>  mape <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>((real <span class="sc">-</span> pred) <span class="sc">/</span> real)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb70-6"><a href="Rneuronales.html#cb70-6" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">MAE =</span> mae, <span class="at">RMSE =</span> rmse, <span class="at">MAPE =</span> mape))</span>
+<span id="cb70-7"><a href="Rneuronales.html#cb70-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="Rneuronales.html#cb71-1" tabindex="-1"></a>n_pred <span class="ot">&lt;-</span> <span class="dv">3</span>  <span class="co"># Queremos 3 años: 2023 , 2024 ,2025</span></span>
+<span id="cb71-2"><a href="Rneuronales.html#cb71-2" tabindex="-1"></a>last_input <span class="ot">&lt;-</span> <span class="fu">tail</span>(x_norm, <span class="dv">1</span>)</span>
+<span id="cb71-3"><a href="Rneuronales.html#cb71-3" tabindex="-1"></a>futuras_norm <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_pred)</span>
+<span id="cb71-4"><a href="Rneuronales.html#cb71-4" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="Rneuronales.html#cb71-5" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_pred) {</span>
+<span id="cb71-6"><a href="Rneuronales.html#cb71-6" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_jordan, <span class="fu">matrix</span>(last_input, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb71-7"><a href="Rneuronales.html#cb71-7" tabindex="-1"></a>  futuras_norm[i] <span class="ot">&lt;-</span> pred</span>
+<span id="cb71-8"><a href="Rneuronales.html#cb71-8" tabindex="-1"></a>  last_input <span class="ot">&lt;-</span> pred  <span class="co"># usar la predicción como nueva entrada</span></span>
+<span id="cb71-9"><a href="Rneuronales.html#cb71-9" tabindex="-1"></a>}</span>
+<span id="cb71-10"><a href="Rneuronales.html#cb71-10" tabindex="-1"></a></span>
+<span id="cb71-11"><a href="Rneuronales.html#cb71-11" tabindex="-1"></a><span class="co"># Desnormalizar predicciones</span></span>
+<span id="cb71-12"><a href="Rneuronales.html#cb71-12" tabindex="-1"></a>futuras <span class="ot">&lt;-</span> futuras_norm <span class="sc">*</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">+</span> <span class="fu">min</span>(x)</span>
+<span id="cb71-13"><a href="Rneuronales.html#cb71-13" tabindex="-1"></a></span>
+<span id="cb71-14"><a href="Rneuronales.html#cb71-14" tabindex="-1"></a><span class="co"># Mostrar resultados</span></span>
+<span id="cb71-15"><a href="Rneuronales.html#cb71-15" tabindex="-1"></a>anios_futuros <span class="ot">&lt;-</span> (<span class="dv">2022</span> <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(<span class="dv">2022</span> <span class="sc">+</span> n_pred)</span>
+<span id="cb71-16"><a href="Rneuronales.html#cb71-16" tabindex="-1"></a><span class="fu">data.frame</span>(Año <span class="ot">=</span> anios_futuros, Predicción <span class="ot">=</span> <span class="fu">round</span>(futuras, <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##    Año Predicción
+## 1 2023        548
+## 2 2024        563
+## 3 2025        573</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="Rneuronales.html#cb73-1" tabindex="-1"></a><span class="co"># Unir datos reales con predicciones</span></span>
+<span id="cb73-2"><a href="Rneuronales.html#cb73-2" tabindex="-1"></a>serie_completa <span class="ot">&lt;-</span> <span class="fu">c</span>(x, futuras)</span>
+<span id="cb73-3"><a href="Rneuronales.html#cb73-3" tabindex="-1"></a>anios_completos <span class="ot">&lt;-</span> <span class="fu">c</span>(serie_anual<span class="sc">$</span>anio, anios_futuros)</span>
+<span id="cb73-4"><a href="Rneuronales.html#cb73-4" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="Rneuronales.html#cb73-5" tabindex="-1"></a><span class="co"># Graficar</span></span>
+<span id="cb73-6"><a href="Rneuronales.html#cb73-6" tabindex="-1"></a><span class="fu">plot</span>(anios_completos, serie_completa, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb73-7"><a href="Rneuronales.html#cb73-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción Red JORDAN - Suicidios en Antioquia&quot;</span>,</span>
+<span id="cb73-8"><a href="Rneuronales.html#cb73-8" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Número de suicidios&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb73-9"><a href="Rneuronales.html#cb73-9" tabindex="-1"></a><span class="fu">lines</span>(serie_anual<span class="sc">$</span>anio, x, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb73-10"><a href="Rneuronales.html#cb73-10" tabindex="-1"></a><span class="fu">points</span>(anios_futuros, futuras, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb73-11"><a href="Rneuronales.html#cb73-11" tabindex="-1"></a></span>
+<span id="cb73-12"><a href="Rneuronales.html#cb73-12" tabindex="-1"></a><span class="co"># Agregar leyenda</span></span>
+<span id="cb73-13"><a href="Rneuronales.html#cb73-13" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Histórico&quot;</span>, <span class="st">&quot;Predicción&quot;</span>),</span>
+<span id="cb73-14"><a href="Rneuronales.html#cb73-14" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">19</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+<div id="desempeño-de-redes-elman-y-jordan" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Desempeño de redes ELMAN y JORDAN<a href="Rneuronales.html#desempeño-de-redes-elman-y-jordan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="Rneuronales.html#cb74-1" tabindex="-1"></a><span class="co"># Crear tabla de resultados</span></span>
+<span id="cb74-2"><a href="Rneuronales.html#cb74-2" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb74-3"><a href="Rneuronales.html#cb74-3" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="fu">c</span>(<span class="st">&quot;JORDAN&quot;</span>, <span class="st">&quot;ELMAN&quot;</span>),</span>
+<span id="cb74-4"><a href="Rneuronales.html#cb74-4" tabindex="-1"></a>  <span class="at">MAE =</span> <span class="fu">c</span>(<span class="fl">24.79</span>, <span class="fl">26.04</span>),</span>
+<span id="cb74-5"><a href="Rneuronales.html#cb74-5" tabindex="-1"></a>  <span class="at">RMSE =</span> <span class="fu">c</span>(<span class="fl">28.75</span>, <span class="fl">34.37</span>),</span>
+<span id="cb74-6"><a href="Rneuronales.html#cb74-6" tabindex="-1"></a>  <span class="at">MAPE =</span> <span class="fu">c</span>(<span class="fl">6.93</span>, <span class="fl">7.41</span>)</span>
+<span id="cb74-7"><a href="Rneuronales.html#cb74-7" tabindex="-1"></a>)</span>
+<span id="cb74-8"><a href="Rneuronales.html#cb74-8" tabindex="-1"></a></span>
+<span id="cb74-9"><a href="Rneuronales.html#cb74-9" tabindex="-1"></a><span class="co"># Mostrar en consola</span></span>
+<span id="cb74-10"><a href="Rneuronales.html#cb74-10" tabindex="-1"></a><span class="fu">print</span>(resultados)</span></code></pre></div>
+<pre><code>##   Modelo   MAE  RMSE MAPE
+## 1 JORDAN 24.79 28.75 6.93
+## 2  ELMAN 26.04 34.37 7.41</code></pre>
+<p>En promedio, la red JORDAN se equivoca por 25 casos y la ELMAN por 26 casos al predecir el número de suicidios.</p>
+<p>La red JORDAN tiene menor dispersión de errores. El RMSE penaliza más los errores grandes, por lo tanto JORDAN comete menos errores severos.</p>
+<p>La red JORDAN tiene un error relativo promedio del 6.93 %, mientras que ELMAN del 7.41 %. Es decir, JORDAN es más precisa en términos porcentuales.</p>
+<p>Las tres métricas son mejores en la red JORDAN, lo cual indica que es el modelo más preciso y confiable para este conjunto de datos.</p>
+<p>La diferencia no es extrema, pero suficiente para justificar que JORDAN se ajusta mejor a la estructura de la serie temporal y tiene mejor capacidad predictiva.</p>
+<p>En conclusión para predecir con mayor exactitud el número de suicidios anuales, la red JORDAN ofrece una mejor aproximación general que la red ELMAN.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="Rneuronales.html#cb76-1" tabindex="-1"></a><span class="co"># Convertir a formato largo para ggplot</span></span>
+<span id="cb76-2"><a href="Rneuronales.html#cb76-2" tabindex="-1"></a>metricas_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(resultados, <span class="at">id.vars =</span> <span class="st">&quot;Modelo&quot;</span>)</span>
+<span id="cb76-3"><a href="Rneuronales.html#cb76-3" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="Rneuronales.html#cb76-4" tabindex="-1"></a><span class="co"># Graficar</span></span>
+<span id="cb76-5"><a href="Rneuronales.html#cb76-5" tabindex="-1"></a><span class="fu">ggplot</span>(metricas_long, <span class="fu">aes</span>(<span class="at">x =</span> variable, <span class="at">y =</span> value, <span class="at">fill =</span> Modelo)) <span class="sc">+</span></span>
+<span id="cb76-6"><a href="Rneuronales.html#cb76-6" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-7"><a href="Rneuronales.html#cb76-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Comparación de desempeño: Red JORDAN vs ELMAN&quot;</span>,</span>
+<span id="cb76-8"><a href="Rneuronales.html#cb76-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Métrica&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Valor&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-9"><a href="Rneuronales.html#cb76-9" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;JORDAN&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;ELMAN&quot;</span> <span class="ot">=</span> <span class="st">&quot;firebrick&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb76-10"><a href="Rneuronales.html#cb76-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div>
+<p><img src="series-tiempo_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Prophet.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["series-tiempo.pdf", "series-tiempo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
