@@ -1,4 +1,5 @@
 intro
+pronóstico-de-suicidios-en-antioquia-2005-2022
 justificación
 por-qué-aplica-para-pronóstico-en-series-de-tiempo
 valor-agregado-del-pronóstico
