@@ -506,7 +506,7 @@ Línea azul (tendencia): muestra la predicción central de Prophet basada en la 
 
 Sombra azul (intervalo de incertidumbre): representa el intervalo de confianza del 95%. Indica que hay incertidumbre creciente hacia el futuro (lo cual es normal).
 
-Puntos negros: son los valores reales observados. En general, están bien alineados con la tendencia estimada, lo cual sugiere un buen ajuste del modelo.
+Puntos negros: son los valores reales observados. En general, están bien alineados con la tendencia estimada, lo cual sugiere un buen ajuste del modelo.-----
 
 
 ```{r}
